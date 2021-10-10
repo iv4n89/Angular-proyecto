@@ -1,0 +1,31 @@
+<form [formGroup]="newFilmForm">
+  <div class="mb-3">
+    <label class="form-label">Titulo: </label>
+    <input type="text" class="form-control" formControlName="titulo">
+    <span errorMessage [valid]="!tieneError('titulo')" message="El titulo de la película es obligatorio"></span>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Estreno: </label>
+    <input type="number" class="form-control" formControlName="estreno">
+    <span errorMessage [valid]="!tieneError('estreno')"
+      message="Se necesita especificar la fecha válida de estreno"></span>
+  </div>
+  <div class="mb-3 button-container">
+    <button class="btn btn-dark me-3 mb-3" [disabled]="imagen_subir" (click)="imagen_subir = true">Subir
+      imagen</button>
+    <button class="btn btn-dark mb-3" [disabled]="!imagen_subir" (click)="imagen_subir = false">Imagen por
+      url</button>
+  </div>
+  <div *ngIf="imagen_subir;else imagen_url">
+    <div class="mb-3">
+      <label class="form-label">Subir imagen: </label>
+      <input type="file" class="form-control" formControlName="img">
+      <span errorMessage [valid]="!tieneError('img')" message="Se necesita añadir una imagen de la pelicula"></span>
+    </div>
+  </div>
+  <ng-template #imagen_url class="mb-3">
+    <label class="form-label">Imagen: </label>
+    <input type="text" class="form-control" formControlName="img">
+    <span errorMessage [valid]="!tieneError('img')" message="Se necesita añadir una imagen de la pelicula"></span>
+  </ng-template>
+</form>

@@ -1,3 +1,27 @@
 export const environment = {
-  production: true
+  production: true,
+  baseUrl: 'http://localhost:3000/api',
+  avatars: {
+    '1': '../assets/avatars/1.png',
+    '2': '../assets/avatars/2.png',
+    '3': '../assets/avatars/3.png',
+    '4': '../assets/avatars/4.png',
+    '5': '../assets/avatars/5.png',
+    '6': '../assets/avatars/6.png',
+    '7': '../assets/avatars/7.png',
+    '8': '../assets/avatars/8.png',
+    '9': '../assets/avatars/9.png',
+    '10': '../assets/avatars/10.png',
+    '11': '../assets/avatars/11.png',
+    '12': '../assets/avatars/12.png',
+    '13': '../assets/avatars/13.png',
+    '14': '../assets/avatars/14.png',
+    '15': '../assets/avatars/15.png',
+    '16': '../assets/avatars/16.png',
+    '17': '../assets/avatars/17.png',
+    '18': '../assets/avatars/18.png',
+    '19': '../assets/avatars/19.png',
+    '20': '../assets/avatars/20.png',
+    'default': '../assets/avatars/account.png',
+  }
 };

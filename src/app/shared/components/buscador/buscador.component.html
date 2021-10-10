@@ -1,0 +1,5 @@
+<form [formGroup]="buscador" (ngSubmit)="buscar()">
+  <i class='bx bx-search'></i>
+  <input type="text" placeholder="Titulo o Año" formControlName="termino">
+  <span class="tooltip">Buscador</span>
+</form>

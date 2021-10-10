@@ -1,1 +1,52 @@
-/* You can add global styles to this file, and also import other style files */
+.hidden {
+  display: none;
+}
+
+.filmContainer {
+  min-height: 100vh;
+  height: 100%;
+  min-width: 100vw;
+  width: 100vw;
+  /* background: url('../../../../assets/images/backgrounds/back5.jpg') no-repeat center center fixed;
+      background-size: cover; */
+  background: linear-gradient(45deg, #a1b7d8, #1bc4e1, #fb00ff, #89339e);
+  background-size: 400% 400%;
+  background-attachment: fixed;
+  animation: gradient 15s ease infinite;
+}
+
+.component-container {
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  box-shadow: -10px 10px 20px #000;
+}
+
+.logo {
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 10% 90%;
+  }
+
+  25% {
+    background-position: 50% 50%;
+  }
+
+  50% {
+    background-position: 90% 10%;
+  }
+
+  75% {
+    background-position: 50% 50%
+  }
+
+  100% {
+    background-position: 10% 90%;
+  }
+}

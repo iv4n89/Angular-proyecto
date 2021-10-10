@@ -1,0 +1,91 @@
+<div class="sidebar">
+  <div class="logo_content">
+    <div class="logo">
+      <div class="logo_name"></div>
+    </div>
+  </div>
+  <ul class="nav_list">
+    <li>
+      <div [ngClass]="this.open ? 'sidebar open' : 'sidebar'" openCloseSideNav>
+        <div class="logo-details">
+          <i class='bx bx-camera-movie icon'></i>
+          <div class="logo_name">Films DB</div>
+          <i [class]="this.open ? 'bx bx-menu-alt-right btn-open' : 'bx bx-menu btn-open'" (click)="openClose()"></i>
+        </div>
+        <ul class="nav-list">
+          <li>
+            <form [formGroup]="buscador" (ngSubmit)="buscar()">
+              <i class='bx bx-search' (click)="openTab()"></i>
+              <input type="text" placeholder="Titulo o Año" formControlName="termino">
+              <span class="tooltip">Buscador</span>
+            </form>
+          </li>
+          <li>
+            <a routerLink="/films/list">
+              <i class='bx bx-grid-alt'></i>
+              <span class="links_name">Listado</span>
+            </a>
+            <span class="tooltip">Listado</span>
+          </li>
+          <li *ngIf="checkAdmin()">
+            <a routerLink="/films/add">
+              <i class='bx bx-edit-alt'></i>
+              <span class="links_name">Añadir pelicula</span>
+            </a>
+            <span class="tooltip">Añadir pelicula</span>
+          </li>
+          <li>
+            <a *ngIf="!checkLogin(); else loginPage" routerLink="/auth/login">
+              <i class='bx bx-user'></i>
+              <span class="links_name">Usuario</span>
+            </a>
+            <ng-template #loginPage>
+              <a routerLink="/auth/details">
+                <i class='bx bx-user'></i>
+                <span class="links_name">{{ userName }}</span>
+              </a>
+            </ng-template>
+            <span class="tooltip">Usuario</span>
+          </li>
+          <li>
+            <a routerLink="/auth/register">
+              <i class='bx bx-user-plus'></i>
+              <span class="links_name">Registro</span>
+            </a>
+            <span class="tooltip">Registro</span>
+          </li>
+          <li>
+            <a href="#">
+              <i class='bx bx-cog'></i>
+              <span class="links_name">Configuracion</span>
+            </a>
+            <span class="tooltip">Configuracion</span>
+          </li>
+          <li class="profile" *ngIf="checkLogin(); else loginLi">
+            <div class="profile-details">
+              <div class="name_job">
+                <div class="name">{{userName}}</div>
+                <div class="job">{{userRole}}</div>
+              </div>
+            </div>
+            <i class='bx bx-log-out logInOut' (click)="logOut()"></i>
+            <span class="tooltip">Log Out</span>
+          </li>
+          <ng-template #loginLi>
+            <li class="profile">
+              <div class="profile-details">
+                <div class="name_job">
+                  <div class="name">Login</div>
+                  <div class="job">_____</div>
+                </div>
+                <div class="icon_container">
+                  <i class='bx bx-log-in logInOut' (click)="login()"></i>
+                </div>
+              </div>
+            </li>
+          </ng-template>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</div>
