@@ -1,0 +1,22 @@
+<div class="container mt-1 mb-1">
+  <div class="row">
+    <div [routerLink]="'/comments/film/'+film.id" class="row top-position">
+      <div class="d-flex justify-content-center align-items-center font-weight-bolder col-lg-2 col-md-5"
+        style="font-size: 2em;">
+        <span>{{ index + 1 }}º</span><i
+          [class]="index == 0 ? 'bx bxs-crown top-one' : index == 1 ? 'bx bxs-crown top-two' : index == 2 ? 'bx bxs-crown top-three' : 'bx bxs-crown invisible'"></i>
+      </div>
+      <div class="p-2 col-lg-2 col-md-5">
+        <img [src]="film.img" alt="film-image" style="height: 150px; width: 110px; border-radius: 10px;">
+      </div>
+      <div class="row align-items-lg-center col-lg-8 col-md-12">
+        <span style="font-size: 1.7em;">{{film.titulo | titlecase}}</span>
+        <div class="d-flex" style="position: relative;">
+          <big-stars [color]="'black'" [size]="1" [initial_stars]="film.puntuacion_media! / 2"
+            *ngIf="film.puntuacion_media! >= 0">
+          </big-stars><span style="position: absolute; bottom: 3px; left: 100px;">({{film.puntuacion_media}})</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

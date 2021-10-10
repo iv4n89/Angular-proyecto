@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { switchMap, map } from 'rxjs/operators';
+import { switchMap, map, tap } from 'rxjs/operators';
 
 import { Film, FilmResponse, IFilmService } from '../interfaces/films.interfaces';
 import { environment } from '../../../environments/environment';
@@ -15,8 +15,9 @@ export class FilmsService implements IFilmService {
 
   constructor(private http: HttpClient) { }
 
-  getAllFilms(limit: number, offset: number, contains?: string, year: number = 0): Observable<FilmResponse> {
-    return this.http.get<FilmResponse>(`${this.url}/films?limit=${limit}&offset=${offset}&contains=${contains}&year=${year}`);
+  getAllFilms(limit: number, offset: number, contains: string = "", year: number = 0): Observable<FilmResponse> {
+    return this.http.get<FilmResponse>(`${this.url}/films?limit=${limit}&offset=${offset}&contains=${contains}&year=${year}`)
+      .pipe(tap(resp => console.log(resp)));
   }
   getOneFilm(id: number): Observable<Film> {
     return this.http.get<Film>(`${this.url}/films/${id}`);

@@ -1,0 +1,9 @@
+<div class=" animate__animated animate__fadeIn">
+  <div class="container mt-3 mb-3">
+    <div class="row">
+      <div *ngFor="let f of films; let i = index">
+        <app-top-list [film]="f" [index]="i"></app-top-list>
+      </div>
+    </div>
+  </div>
+</div>

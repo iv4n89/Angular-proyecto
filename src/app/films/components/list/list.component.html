@@ -1,5 +1,5 @@
 <div class="row">
-  <small>Total: {{ total }}</small>
+  <!-- <small>Total: {{ total }}</small> -->
   <div style="min-height: 75vh;" class="row row-cols-auto justify-content-evenly">
     <app-film-card *ngFor="let film of films" class="mb-3 mt-3" [film]="film" (filmDeleted)="filmDeleted()">
     </app-film-card>

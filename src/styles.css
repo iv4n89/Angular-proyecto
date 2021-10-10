@@ -1,3 +1,36 @@
+@font-face {
+  font-family: Poppins-Medium;
+  src: url('assets/fonts/poppins/Poppins-Medium.ttf');
+}
+
+* {
+  font-family: Poppins-Medium;
+}
+
+/* Scrollbar */
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* film container */
+
 .hidden {
   display: none;
 }
@@ -7,18 +40,20 @@
   height: 100%;
   min-width: 100vw;
   width: 100vw;
-  /* background: url('../../../../assets/images/backgrounds/back5.jpg') no-repeat center center fixed;
-      background-size: cover; */
-  background: linear-gradient(45deg, #a1b7d8, #1bc4e1, #fb00ff, #89339e);
-  background-size: 400% 400%;
-  background-attachment: fixed;
-  animation: gradient 15s ease infinite;
+  /* background: url('assets/images/backgrounds/back5.jpg') no-repeat center center fixed; */
+  /* background: linear-gradient(45deg, #a1b7d8, #1bc4e1, #fb00ff, #89339e); */
+  background: url('assets/images/bg-01.jpg') no-repeat center center fixed;
+  background-size: cover;
+  /* background-size: 400% 400%; */
+  /* background-attachment: fixed; */
+  /* animation: gradient 15s ease infinite; */
 }
 
 .component-container {
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.8) !important;
   box-shadow: -10px 10px 20px #000;
+  margin-bottom: 20px;
 }
 
 .logo {
@@ -31,22 +66,22 @@
 
 @keyframes gradient {
   0% {
-    background-position: 10% 90%;
+    background-position: 25% 75%;
   }
 
-  25% {
+  /* 25% {
     background-position: 50% 50%;
-  }
+  } */
 
   50% {
-    background-position: 90% 10%;
+    background-position: 75% 25%;
   }
 
-  75% {
+  /* 75% {
     background-position: 50% 50%
-  }
+  } */
 
   100% {
-    background-position: 10% 90%;
+    background-position: 25% 75%;
   }
 }

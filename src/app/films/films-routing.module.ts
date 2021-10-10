@@ -5,6 +5,7 @@ import { AddPageComponent } from './pages/add-page/add-page.component';
 import { HomePageComponent } from './pages/home/home-page.component';
 
 import { ListPageComponent } from './pages/list-page/list-page.component';
+import { TopListPageComponent } from './pages/top-list-page/top-list-page.component';
 
 const routes: Routes = [
   {
@@ -12,7 +13,8 @@ const routes: Routes = [
     component: HomePageComponent,
     children: [
       { path: 'list', component: ListPageComponent },
-      { path: 'add', component: AddPageComponent, canActivate: [AuthGuardGuard], canLoad: [AuthGuardGuard]},
+      { path: 'add', component: AddPageComponent, canActivate: [AuthGuardGuard], canLoad: [AuthGuardGuard] },
+      { path: 'top', component: TopListPageComponent },
       { path: '**', redirectTo: 'list' }
     ]
   }

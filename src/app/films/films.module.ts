@@ -12,6 +12,8 @@ import { FilmFormComponent } from './components/film-form/film-form.component';
 import { HomePageComponent } from './pages/home/home-page.component';
 import { SharedModule } from '../shared/shared.module';
 import { NgxStarsModule } from 'ngx-stars';
+import { TopListComponent } from './components/top-list/top-list.component';
+import { TopListPageComponent } from './pages/top-list-page/top-list-page.component';
 
 
 @NgModule({
@@ -22,6 +24,8 @@ import { NgxStarsModule } from 'ngx-stars';
     AddPageComponent,
     FilmFormComponent,
     HomePageComponent,
+    TopListComponent,
+    TopListPageComponent,
   ],
   imports: [
     CommonModule,

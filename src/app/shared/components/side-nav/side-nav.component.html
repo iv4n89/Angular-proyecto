@@ -17,7 +17,6 @@
             <form [formGroup]="buscador" (ngSubmit)="buscar()">
               <i class='bx bx-search' (click)="openTab()"></i>
               <input type="text" placeholder="Titulo o Año" formControlName="termino">
-              <span class="tooltip">Buscador</span>
             </form>
           </li>
           <li>
@@ -25,14 +24,18 @@
               <i class='bx bx-grid-alt'></i>
               <span class="links_name">Listado</span>
             </a>
-            <span class="tooltip">Listado</span>
+          </li>
+          <li>
+            <a routerLink="/films/top">
+              <i class='bx bx-bar-chart'></i>
+              <span class="links_name">Top</span>
+            </a>
           </li>
           <li *ngIf="checkAdmin()">
             <a routerLink="/films/add">
               <i class='bx bx-edit-alt'></i>
               <span class="links_name">Añadir pelicula</span>
             </a>
-            <span class="tooltip">Añadir pelicula</span>
           </li>
           <li>
             <a *ngIf="!checkLogin(); else loginPage" routerLink="/auth/login">
@@ -45,21 +48,18 @@
                 <span class="links_name">{{ userName }}</span>
               </a>
             </ng-template>
-            <span class="tooltip">Usuario</span>
           </li>
           <li>
             <a routerLink="/auth/register">
               <i class='bx bx-user-plus'></i>
               <span class="links_name">Registro</span>
             </a>
-            <span class="tooltip">Registro</span>
           </li>
           <li>
             <a href="#">
               <i class='bx bx-cog'></i>
               <span class="links_name">Configuracion</span>
             </a>
-            <span class="tooltip">Configuracion</span>
           </li>
           <li class="profile" *ngIf="checkLogin(); else loginLi">
             <div class="profile-details">
