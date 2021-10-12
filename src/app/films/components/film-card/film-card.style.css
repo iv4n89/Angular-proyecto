@@ -5,16 +5,8 @@
   background-position: center;
   overflow: hidden;
   position: relative;
-  margin: 10 auto;
   cursor: pointer;
   border-radius: 10px;
-}
-
-@media screen and (max-width: 400px){
-  .cardCustom {
-    width: 150px;
-    height: 200px;
-  }
 }
 
 .cardCustom:after {
@@ -36,7 +28,19 @@
   position: absolute;
   left: 10px;
   bottom: 30px;
-  font-size: 20px;
+  font-size: 18px;
+  color: #FFF;
+  text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+  font-weight: bold;
+  transition: all linear 0.25s;
+  z-index: 10;
+}
+
+.customNameSmall {
+  position: absolute;
+  left: 10px;
+  bottom: 30px;
+  font-size: 16px;
   color: #FFF;
   text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
   font-weight: bold;
@@ -90,6 +94,11 @@
   font-size: 23px;
 }
 
+.cardCustom:hover .customNameSmall {
+  bottom: 70px;
+  font-size: 17px;
+}
+
 .cardCustom:hover .customYear {
   bottom: 60px;
   font-size: 15px;
@@ -97,4 +106,26 @@
 
 .cardCustom:hover .customRating {
   bottom: 30px;
+}
+
+@media screen and (max-width: 570px) {
+  .cardCustom {
+    width: 150px;
+    height: 200px;
+  }
+  .customNameSmall {
+    font-size: 13px;
+  }
+  .cardCustom:hover .customName {
+    bottom: 70px;
+    font-size: 20px;
+  }
+  .cardCustom:hover .customNameSmall {
+    bottom: 70px;
+    font-size: 15px;
+  }
+  .card-custom:hover .customYear {
+    bottom: 50px;
+    font-size: 13px;
+  }
 }

@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 
 import { UserService } from '../../services/user.service';
 import { UserForm } from '../../interfaces/user.interfaces';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +14,7 @@ import { UserForm } from '../../interfaces/user.interfaces';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private userService: UserService, private router:Router) { }
+  constructor(private userService: UserService, private router:Router, private authService: AuthService) { }
 
   ngOnInit(): void {
 
@@ -26,7 +27,13 @@ export class RegisterComponent implements OnInit {
         .subscribe(
           response => {
             if (response === true) {
-              Swal.fire('OK', 'Usuario creado', 'success');
+              Swal.fire('OK', 'Usuario creado', 'success')
+                .then(result => {
+                  if (!localStorage.getItem('token')) {
+                    this.authService.login(email, password).subscribe();
+                    this.router.navigate(['/films/list']);
+                  }
+                });
             } else {
               Swal.fire('Error', response, 'error');
             }

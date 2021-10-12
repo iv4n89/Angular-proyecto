@@ -10,10 +10,18 @@
     <span errorMessage [valid]="!tieneError('estreno')"
       message="Se necesita especificar la fecha válida de estreno"></span>
   </div>
+  <div class="mb-3">
+    <label class="form-label">Duración: </label>
+    <input type="number" class="form-control" formControlName="duracion">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Género: </label>
+    <app-selector-de-genero (onSelect)="selectGenero($event)"></app-selector-de-genero>
+  </div>
   <div class="mb-3 button-container">
-    <button class="btn btn-dark me-3 mb-3" [disabled]="imagen_subir" (click)="imagen_subir = true">Subir
+    <button class="btn btn-dark me-3 mb-3" [disabled]="imagen_subir" (click)="subirImagen()">Subir
       imagen</button>
-    <button class="btn btn-dark mb-3" [disabled]="!imagen_subir" (click)="imagen_subir = false">Imagen por
+    <button class="btn btn-dark mb-3" [disabled]="!imagen_subir" (click)="subirImagen()">Imagen por
       url</button>
   </div>
   <div *ngIf="imagen_subir;else imagen_url">

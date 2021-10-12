@@ -1,5 +1,8 @@
 <div class="animate__animated animate__fadeIn details-container">
   <button class="btn btn-danger logout" (click)="logout()">Salir <i class='bx bx-power-off'></i></button>
-  <app-user-details [userDetails]="user" (deleteEmitter)="deleteUser($event)" (editEmitter)="editUser($event)">
-  </app-user-details>
+  <div [class]="edit_user === true ? 'open' : 'closed'">
+    <app-user-details [userDetails]="user" (deleteEmitter)="deleteUser($event)" (editEmitter)="editUser($event)"
+      (editando)="editando($event)">
+    </app-user-details>
+  </div>
 </div>

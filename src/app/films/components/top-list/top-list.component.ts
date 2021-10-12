@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { map, tap } from 'rxjs/operators';
+
 import { Film } from '../../interfaces/films.interfaces';
-import { FilmsService } from '../../services/films.service';
+
 
 @Component({
   selector: 'app-top-list',

@@ -14,6 +14,7 @@ export class UserDetailsComponent implements OnInit {
 
   @Input('userDetails') user!: User;
   @Output() deleteEmitter: EventEmitter<boolean> = new EventEmitter();
+  @Output() editando: EventEmitter<boolean> = new EventEmitter();
   @Output() editEmitter: EventEmitter<UserForm> = new EventEmitter();
 
   get name() {
@@ -52,7 +53,10 @@ export class UserDetailsComponent implements OnInit {
   }
 
   editar() {
+    this.editando.emit(!this.isEditing);
     this.isEditing = !this.isEditing;
+
+    // this.isEditing = !this.isEditing;
   }
 
   valoresForm() {

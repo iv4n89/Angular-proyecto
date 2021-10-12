@@ -1,4 +1,7 @@
-<div class="row" style="min-height: 100vh; height: 100vh; min-width: 100vw; width: 100vw;">
-  <app-side-nav></app-side-nav>
+<div>
+  <app-side-nav *ngIf="innerWidth >= 570; else navbar"></app-side-nav>
+  <ng-template #navbar>
+    <app-collapsed-navbar></app-collapsed-navbar>
+  </ng-template>
   <router-outlet></router-outlet>
 </div>

@@ -1,12 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ElementRef, ViewChildren, ContentChild, ContentChildren, AfterViewInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import Swal from 'sweetalert2';
 
-import { successToast, failToast } from '../../../shared/helpers/SwalToast.helper';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Film } from '../../interfaces/films.interfaces';
 import { FilmsService } from '../../services/films.service';
-import { Router } from '@angular/router';
+import { successToast, failToast } from '../../../shared/helpers/SwalToast.helper';
 
 
 @Component({
@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
   templateUrl: './film-card.component.html',
   styleUrls: ['./film-card.style.css']
 })
-export class FilmCardComponent implements OnInit {
+export class FilmCardComponent implements OnInit, AfterViewInit {
 
   @Input() film!: Film;
   @Output() filmDeleted: EventEmitter<void> = new EventEmitter();
@@ -26,16 +26,19 @@ export class FilmCardComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  ngAfterViewInit() {
+  }
+
   borrarPelicula(id: number) {
     Swal.fire({
       title: 'Borrar entrada',
       text: '¿Desea borrar esta película de la base de datos?',
       icon: 'question',
       iconColor: 'red',
-      confirmButtonColor: 'green',
+      confirmButtonColor: 'red',
       confirmButtonText: 'Borrar',
       showCancelButton: true,
-      cancelButtonColor: 'red',
+      cancelButtonColor: 'green',
       cancelButtonText: 'Cancelar'
     }).then(
       result => {
@@ -54,21 +57,50 @@ export class FilmCardComponent implements OnInit {
     Swal.fire({
       title: 'Editar Entrada',
       html: `
-        <form id="form">
-          <div>
-            <label>Título</label>
-            <input class="swal2-input" type="text" id="titulo" value="${this.film.titulo}" required>
+        <form id="form" style="overflow-x: hidden">
+          <div class="row align-items-center justify-content-center mb-2">
+            <label class="col-md-3 col-sm-6">Título</label>
+            <input class="swal2-input col-auto" type="text" id="titulo" value="${this.film.titulo}" required >
           </div>
-          <div>
-            <label>Estreno</label>
-            <input class="swal2-input" type="text" id="estreno" value="${this.film.estreno}" required>
+          <div class="row align-items-center justify-content-center mb-2">
+            <label class="col-md-3 col-sm-6">Estreno</label>
+            <input class="swal2-input col-auto" type="text" id="estreno" value="${this.film.estreno}" required >
           </div>
-          <div>
-            <label>Imagen</label>
-            <input class="swal2-input" type="text" id="imagen" value="${this.film.img}" required>
+          <div class="row align-items-center justify-content-center mb-2">
+            <label class="col-md-3 col-sm-6">Género</label>
+            <select class="swal2-input col-auto" id="genero">
+              <option selected disabled hidden>---Seleccione---</option>
+              <option value="acción">Acción</option>
+              <option value="animación">Animación</option>
+              <option value="aventura">Aventura</option>
+              <option value="biografía">Biografía</option>
+              <option value="ciencia_ficción">Ciencia Ficción</option>
+              <option value="comedia">Comedia</option>
+              <option value="crimen">Crimen</option>
+              <option value="deporte">Deporte</option>
+              <option value="documental">Documental</option>
+              <option value="drama">Drama</option>
+              <option value="erótica">Erótica</option>
+              <option value="familiar">Familiar</option>
+              <option value="fantasía">Fantasia</option>
+              <option value="guerra">Guerra</option>
+              <option value="historia">Historia</option>
+              <option value="misterio">Misterio</option>
+              <option value="musical">Musical</option>
+              <option value="romance">Romance</option>
+              <option value="suspense">Suspense</option>
+              <option value="thriller">Thriller</option>
+              <option value="terror">Terror</option>
+              <option value="western">Western</option>
+            </select>
+          </div>
+          <div class="row align-items-center justify-content-center">
+            <label class="col-md-3 col-sm-6">Imagen</label>
+            <input class="swal2-input col-auto" type="text" id="imagen" value="${this.film.img}" required >
           </div>
         </form>
       `,
+      heightAuto: true,
       confirmButtonColor: 'green',
       confirmButtonText: 'Enviar',
       showCancelButton: true,
@@ -76,39 +108,50 @@ export class FilmCardComponent implements OnInit {
       cancelButtonText: 'Cancelar',
       focusConfirm: false,
       preConfirm: () => {
+        //Recoger el formulario e inputs en variables
         const form = document.getElementById('form') as HTMLFormElement;
         const titulo = document.getElementById('titulo') as HTMLInputElement;
         const estreno = document.getElementById('estreno') as HTMLInputElement;
+        const genero = document.getElementById('genero') as HTMLSelectElement;
         const imagen = document.getElementById('imagen') as HTMLInputElement;
 
+        //Revisar si los datos del formulario son correctos
         if (!form.checkValidity()) {
           failToast('Datos de película no validos');
           return;
         }
 
+        //Devuelve los datos del formulario al próximo paso
         return {
           titulo: titulo.value,
           estreno: estreno.value,
+          genero: genero.value,
           img: imagen.value
         }
       }
     }).then(
       result => {
         if (result.isConfirmed) {
+          //Si se pulsa aceptar, crear un objeto de tipo Film y actualizar la base de datos
           const newFilmValues: Film = {
             id,
             titulo: result.value?.titulo!,
             estreno: Number(result.value?.estreno!),
-            UserId: this.film.UserId
+            img: result.value?.img,
+            UserId: this.film.UserId,
+            genero: result.value?.genero!
           }
           this.filmService.updateOneFilm(id, newFilmValues)
             .subscribe(result => {
+              //Si se actualiza la base de datos, se avisa al usuario a través de un modal
               successToast('Entrada actualizada con éxito');
+              //Recarga del componente
               this.router.navigateByUrl('/films/list');
             });
         } else if (result.isDismissed || result.dismiss == Swal.DismissReason.backdrop) {
+          //Si se pulsa fuera del modal o se pulsa cancela, se notifica de acción cancelada al usuario a través de un modal
           failToast('Acción cancelada');
-    }
+          }
       }
     );
   }

@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="card">
-        <div class="p-5">
+        <div [ngClass]="{'p-5': innerWidth >= 570, 'p-1': innerWidth <= 570}">
           <router-outlet></router-outlet>
         </div>
       </div>

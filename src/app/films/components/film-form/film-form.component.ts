@@ -15,7 +15,9 @@ export class FilmFormComponent implements OnInit {
 
   newFilmForm: FormGroup = this.fb.group({
     titulo: ['', Validators.required],
-    estreno: [1950, [Validators.required, Validators.min(1950), Validators.max(2022)]],
+    estreno: [1950, [Validators.required, Validators.min(1950), Validators.max(this.currentYear)]],
+    duracion: [0, [Validators.required, Validators.min(0)]],
+    genero: ['---Seleccione---', [Validators.required]],
     img: ['']
   });
 
@@ -24,6 +26,10 @@ export class FilmFormComponent implements OnInit {
   imagen_subir: boolean = false;
 
   constructor(private fb: FormBuilder) { }
+
+  get currentYear() {
+    return new Date().getFullYear();
+  }
 
   ngOnInit(): void {
     this.newFilmForm.get('img')?.valueChanges.subscribe(
@@ -38,11 +44,19 @@ export class FilmFormComponent implements OnInit {
     )
   }
 
+  selectGenero(genero: string) {
+    this.newFilmForm.get('genero')?.setValue(genero);
+  }
+
   tieneError(campo: string): boolean {
     if (this.newFilmForm.get(campo)?.dirty || this.newFilmForm.get(campo)?.touched) {
       return this.newFilmForm.controls[campo].invalid;
     }
     return false;
+  }
+
+  subirImagen() {
+    this.imagen_subir = !this.imagen_subir;
   }
 
 }

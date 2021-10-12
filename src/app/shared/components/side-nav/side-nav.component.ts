@@ -5,6 +5,7 @@ import { debounceTime } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { successToast } from '../../helpers/SwalToast.helper';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-side-nav',
@@ -23,6 +24,9 @@ export class SideNavComponent implements OnInit {
   }
   get userRole() {
     return this.authService.user.role.split('_')[0];
+  }
+  get avatar() {
+    return this.authService.user.img || environment.avatars[environment.avatars.length - 1];
   }
 
   constructor(private fb: FormBuilder, private buscadorService: BuscadorService, private router: Router, private authService: AuthService) {

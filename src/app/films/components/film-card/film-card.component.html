@@ -6,7 +6,8 @@
 <div class="card text-white cardCustom" routerLink="/comments/film/{{film.id}}">
   <div>
     <div class="card-img-overlay">
-      <h5 class="customName">{{ film.titulo | titlecase }}</h5>
+      <h5 [ngClass]="{'customName': film.titulo.length < 40, 'customNameSmall': film.titulo.length > 40}">{{ film.titulo
+        | titlecase }}</h5>
       <small class="customYear">{{ film.estreno }}</small>
       <ngx-stars [size]="1" [initialStars]="film.puntuacion_media! /2" [maxStars]="5" [readonly]="true" color="#fff"
         *ngIf="film.puntuacion_media! >= 0" class="customRating">

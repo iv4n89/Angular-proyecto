@@ -16,6 +16,6 @@ export class BuscadorService {
   }
 
   get termino() {
-    return sessionStorage.getItem('termino')!;
+    return sessionStorage.getItem('termino') || "";
   }
 }

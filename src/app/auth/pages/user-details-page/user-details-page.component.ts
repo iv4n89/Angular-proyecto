@@ -13,18 +13,11 @@ import { of } from 'rxjs';
 @Component({
   selector: 'app-user-details-page',
   templateUrl: './user-details-page.component.html',
-  styles: [`
-    .details-container {
-      position: relative;
-    }
-    .logout {
-      position: absolute;
-      right: -55px;
-      top: -45px;
-    }
-  `]
+  styleUrls: [`../styles/auth.styles.css`]
 })
 export class UserDetailsPageComponent implements OnInit {
+
+  edit_user: boolean = false;
 
   get user() {
     return this.authService.user;
@@ -91,5 +84,10 @@ export class UserDetailsPageComponent implements OnInit {
   logout() {
     this.authService.logout();
     this.router.navigateByUrl('/film/list');
+  }
+
+  editando(value: boolean) {
+    this.edit_user = !this.edit_user;
+    console.log(this.edit_user);
   }
 }

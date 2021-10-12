@@ -14,6 +14,7 @@ export class EditCommentComponent implements OnInit {
 
   @Input() comment!: Comment;
   @Output() onEdit: EventEmitter<Comment> = new EventEmitter();
+  @Output() onCancel: EventEmitter<boolean> = new EventEmitter();
 
     commentForm: FormGroup = this.fb.group({
       descripcion: ['', [Validators.required]],
@@ -48,6 +49,11 @@ export class EditCommentComponent implements OnInit {
 
   onEditEmit() {
     this.onEdit.emit(this.commentForm.value);
+  }
+
+  onCancelEmit() {
+    this.onCancel.emit(false);
+    window.scrollTo(0, document.body.scrollHeight);
   }
 
   onRating(value: number) {

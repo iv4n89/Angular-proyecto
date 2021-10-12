@@ -1,64 +1,66 @@
 <form [formGroup]="userForm" (ngSubmit)="editUser()">
   <div class="row">
     <div class="col-5">
-      <div *ngIf="!isEditing; else editForm">
-        <div class="mb-3">
+      <div *ngIf="!isEditing; else editForm" class="animate__animated animate__fadeIn">
+        <div class="mb-3 d-flex">
           <label class="form-label">Nombre: </label>
-          <label class="form-text ps-3"> {{ user.name }}</label>
+          <label class="form-text ps-2"> {{ user.name }}</label>
         </div>
-        <div class="mb-3">
+        <div class="mb-3 d-flex">
           <label class="form-label">Email: </label>
           <label class="form-text ps-3"> {{ user.email }}</label>
         </div>
-        <div class="mb-3">
+        <div class="mb-3 d-flex">
           <label class="form-label">Rol: </label>
           <span class="form-text ps-3"> {{ user.role }}</span>
         </div>
       </div>
       <ng-template #editForm>
-        <div class="mb-3">
-          <label class="form-label">Nombre: </label>
-          <input type="text" class="form-control" formControlName="name">
-          <span errorMessage [valid]="!tieneError('name', 'required')" message="El nombre es obligatorio"></span>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Email: </label>
-          <input type="email" readonly class="form-control" formControlName="email">
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Contraseña actual: </label>
-          <input type="password" class="form-control" formControlName="password">
-          <span errorMessage [valid]="!tieneError('password', 'minlength')"
-            message="La contraseña debe contener al menos 6 caracteres"></span>
-          <span errorMessage [valid]="!tieneError('password', 'oldPasswordRequired')"
-            message="Necesita escribir su contraseña anterior para actualizarla"></span>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Nueva contraseña: </label>
-          <input type="password" class="form-control" formControlName="password2">
-          <span errorMessage [valid]="!tieneError('password2', 'minlength')"
-            message="La contraseña debe contener al menos 6 caracteres"></span>
-          <span errorMessage [valid]="!tieneError('password2', 'passwordAreEqual')"
-            message="La nueva contraseña no puede ser igual a la anterior"></span>
-          <span errorMessage [valid]="!tieneError('password2', 'newPasswordRequired')"
-            message="Necesita establecer una nueva contraseña para actualizarla"></span>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Rol: </label>
-          <span class="form-text"> {{ user.role }}</span>
-        </div>
-        <div class="mb-3">
-          <button type="submit" class="btn btn-success float-start">Enviar</button>
+        <div class="animate__animated animate__fadeIn">
+          <div class="mb-3">
+            <label class="form-label">Nombre: </label>
+            <input type="text" class="form-control" formControlName="name">
+            <span errorMessage [valid]="!tieneError('name', 'required')" message="El nombre es obligatorio"></span>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email: </label>
+            <input type="email" readonly class="form-control" formControlName="email">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Contraseña actual: </label>
+            <input type="password" class="form-control" formControlName="password">
+            <span errorMessage [valid]="!tieneError('password', 'minlength')"
+              message="La contraseña debe contener al menos 6 caracteres"></span>
+            <span errorMessage [valid]="!tieneError('password', 'oldPasswordRequired')"
+              message="Necesita escribir su contraseña anterior para actualizarla"></span>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Nueva contraseña: </label>
+            <input type="password" class="form-control" formControlName="password2">
+            <span errorMessage [valid]="!tieneError('password2', 'minlength')"
+              message="La contraseña debe contener al menos 6 caracteres"></span>
+            <span errorMessage [valid]="!tieneError('password2', 'passwordAreEqual')"
+              message="La nueva contraseña no puede ser igual a la anterior"></span>
+            <span errorMessage [valid]="!tieneError('password2', 'newPasswordRequired')"
+              message="Necesita establecer una nueva contraseña para actualizarla"></span>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Rol: </label>
+            <span class="form-text"> {{ user.role }}</span>
+          </div>
+          <div>
+            <button type="submit" class="btn btn-success float-start">Enviar</button>
+          </div>
         </div>
       </ng-template>
     </div>
     <div class="col-7">
-      <div *ngIf="!isEditing; else selectAvatar">
+      <div *ngIf="!isEditing; else selectAvatar" class="animate__animated animate__fadeIn">
         <label>Avatar: </label>
         <img [src]="user.img || getAvatar(avatars.length-1)" style="width: 240px; height: 200px;">
       </div>
       <ng-template #selectAvatar>
-        <ul class="d-flex justify-content-evenly flex-wrap">
+        <ul class="d-flex justify-content-evenly flex-wrap animate__animated animate__fadeIn">
           <li><input type="radio" id="img1" [value]="getAvatar(0)" formControlName="img" />
             <label class="imageLabel" for="img1"><img [src]="getAvatar(0)" /></label>
           </li>
@@ -125,10 +127,11 @@
   </div>
 </form>
 <div class="mb-3">
-  <button class="btn btn-dark" style="position: absolute; bottom: -50px; left: 0px;" (click)="editar()">Editar</button>
+  <button class="btn btn-dark" style="position: absolute; bottom: -40px; left: -50px;"
+    (click)="editar()">Editar</button>
 </div>
 <div>
-  <button class="btn btn-danger float-end" style="position: absolute; bottom: -50px; right: -50px;"
+  <button class="btn btn-danger float-end" style="position: absolute; bottom: -40px; right: -50px;"
     (click)="deleteUser()">
     Eliminar usuario
   </button>

@@ -63,6 +63,7 @@
           </li>
           <li class="profile" *ngIf="checkLogin(); else loginLi">
             <div class="profile-details">
+              <img [src]="avatar" alt="avatar">
               <div class="name_job">
                 <div class="name">{{userName}}</div>
                 <div class="job">{{userRole}}</div>
@@ -74,6 +75,7 @@
           <ng-template #loginLi>
             <li class="profile">
               <div class="profile-details">
+                <img [src]="avatar" alt="avatar" style="background-color: white;">
                 <div class="name_job">
                   <div class="name">Login</div>
                   <div class="job">_____</div>

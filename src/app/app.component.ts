@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { AuthService } from './auth/services/auth.service';
 
 @Component({
@@ -7,11 +7,20 @@ import { AuthService } from './auth/services/auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'ProyectoT4';
+  title = 'Films DB';
 
-  constructor(private authService: AuthService) { }
+  innerWidth: number;
+
+  constructor(private authService: AuthService) {
+    this.innerWidth = window.innerWidth;
+  }
 
   ngOnInit(): void {
     this.authService.validarToken().subscribe();
+    window.scrollTo(0, 0);
+  }
+
+  @HostListener('window:resize', ['$event']) onResize(event: any) {
+    this.innerWidth = window.innerWidth;
   }
 }

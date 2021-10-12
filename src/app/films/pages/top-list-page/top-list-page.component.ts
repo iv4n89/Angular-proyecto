@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { Film } from '../../interfaces/films.interfaces';
+
+import { Film, Filter_query } from '../../interfaces/films.interfaces';
 import { FilmsService } from '../../services/films.service';
 
 @Component({
@@ -19,11 +20,11 @@ export class TopListPageComponent implements OnInit {
   constructor(private filmService: FilmsService) { }
 
   ngOnInit(): void {
-    this.repoblar();
+    this.repoblar({limit: this.limit, offset: this.offset});
   }
 
-  repoblar() {
-    this.filmService.getAllFilms(this.limit, this.offset)
+  repoblar(options?: Filter_query) {
+    this.filmService.getAllFilms(options || {})
       .pipe(
         map(films => films.films.sort((current, next) => next.puntuacion_media! - current.puntuacion_media!)),
       ).subscribe(films => this.films = films);

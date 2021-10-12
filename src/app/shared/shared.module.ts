@@ -10,6 +10,7 @@ import { FormErrorMessageDirective } from './directives/form-error-message.direc
 import { AutoSizeDirective } from './directives/auto-size.directive';
 import { BigStarsComponent } from './helpers/rating/big-stars/big-stars.component';
 import { NgxStarsModule } from 'ngx-stars';
+import { CollapsedNavbarComponent } from './components/collapsed-navbar/collapsed-navbar.component';
 
 
 
@@ -21,7 +22,8 @@ import { NgxStarsModule } from 'ngx-stars';
     AdminOnlyDirective,
     FormErrorMessageDirective,
     AutoSizeDirective,
-    BigStarsComponent
+    BigStarsComponent,
+    CollapsedNavbarComponent
   ],
   imports: [
     CommonModule,
@@ -34,7 +36,8 @@ import { NgxStarsModule } from 'ngx-stars';
     AdminOnlyDirective,
     FormErrorMessageDirective,
     AutoSizeDirective,
-    BigStarsComponent
+    BigStarsComponent,
+    CollapsedNavbarComponent
   ]
 })
 export class SharedModule { }

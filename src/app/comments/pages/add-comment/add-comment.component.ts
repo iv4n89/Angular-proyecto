@@ -26,7 +26,7 @@ import Swal from 'sweetalert2';
 export class AddCommentComponent implements OnInit {
 
   filmId: number = Number(this.aR.snapshot.url[1].path);
-  film: Film = { id: 0, UserId: 0, estreno: 0, titulo: '' };
+  film: Film = { id: 0, UserId: 0, estreno: 0, titulo: '', genero: 'Sin Genero' };
   comentario!: Comment;
   comentarios: Comment[] = [];
   total: number = 0;

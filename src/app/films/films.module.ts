@@ -4,7 +4,6 @@ import { HttpClientModule } from '@angular/common/http'
 
 import { FilmsRoutingModule } from './films-routing.module';
 import { FilmCardComponent } from './components/film-card/film-card.component';
-import { ListComponent } from './components/list/list.component';
 import { ListPageComponent } from './pages/list-page/list-page.component';
 import { AddPageComponent } from './pages/add-page/add-page.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -14,18 +13,20 @@ import { SharedModule } from '../shared/shared.module';
 import { NgxStarsModule } from 'ngx-stars';
 import { TopListComponent } from './components/top-list/top-list.component';
 import { TopListPageComponent } from './pages/top-list-page/top-list-page.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SelectorDeGeneroComponent } from './components/selector-de-genero/selector-de-genero.component';
 
 
 @NgModule({
   declarations: [
     FilmCardComponent,
-    ListComponent,
     ListPageComponent,
     AddPageComponent,
     FilmFormComponent,
     HomePageComponent,
     TopListComponent,
     TopListPageComponent,
+    SelectorDeGeneroComponent,
   ],
   imports: [
     CommonModule,
@@ -33,6 +34,7 @@ import { TopListPageComponent } from './pages/top-list-page/top-list-page.compon
     HttpClientModule,
     FilmsRoutingModule,
     SharedModule,
+    NgbModule,
     NgxStarsModule
   ]
 })

@@ -91,6 +91,7 @@ export class AddPageComponent implements OnInit {
         }
       const UserId = this.authService.user.id;
       const newFilm: Film = { UserId, ...this.newFilmForm.value };
+      console.log(newFilm);
       this.filmService.insertOneFilm(newFilm)
         .subscribe();
       this.router.navigateByUrl('/films/list');

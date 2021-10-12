@@ -73,6 +73,7 @@ export class MainCommentsLoaderComponent implements OnInit {
 
   setEditar(value: boolean) {
     this.editComment = value;
+    setTimeout(() => window.scrollTo(0, document.body.scrollHeight), 150);
   }
 
   delete(value: number) {

@@ -14,8 +14,8 @@
 
 .logout {
   position: absolute;
-  right: -55px;
-  top: -45px;
+  right: -50px;
+  top: -40px;
 }
 
 [readonly].form-control {
@@ -63,12 +63,38 @@ button.registerButton:hover {
   /* margin-top: 10%; */
 }
 
+.closed {
+  height: 200px;
+  transition: all ease 0.3s;
+}
+
+.open {
+  height: 470px;
+  transition: all ease 0.3s;
+}
+
+.opening {
+  background-color: white;
+  height: 200px;
+  width: 100%;
+  z-index: 10;
+  transition: all ease 0.2s;
+}
+
+.opened {
+  display: none;
+  transition: all ease 0.2s;
+}
+
 .login-contenedor {
+  min-width: 105vw;
+  width: 100%;
   min-height: 100vh;
-  height: 100vh;
-  min-width: 100vw;
-  width: 100vw;
-  background: url('../../../../assets/images/bg-01.jpg') no-repeat center center fixed;
+  height: 100%;
+  background: url('../../../../assets/images/bg-01.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
   /* background-repeat: no-repeat; */
   background-size: cover;
 }
