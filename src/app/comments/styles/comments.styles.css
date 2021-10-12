@@ -21,8 +21,34 @@
   overflow: hidden;
   padding: 10px;
   width: 100%;
-  margin: 50px auto;
+  /* margin: 50px auto; */
   display: block;
   border-radius: 10px;
   border: 1px solid grey;
+}
+
+.film-info img {
+  max-width: 300px;
+  max-height: 450px;
+  border-radius: 10px;
+}
+.film-info h1{
+  font-size: 2.2em;
+  font-weight: bold;
+}
+.film-info h3 {
+  font-size: 1.5em;
+}
+
+@media screen and (max-width: 570px) {
+  .film-info h1 {
+    font-size: 1.3em;
+  }
+  .film-info h3 {
+    font-size: 1em;
+  }
+  .film-info img {
+    max-width: 150px;
+    max-height: 225px;
+  }
 }

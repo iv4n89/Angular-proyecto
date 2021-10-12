@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ElementRef, ViewChildren, ContentChild, ContentChildren, AfterViewInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { Router } from '@angular/router';
 
 import Swal from 'sweetalert2';
@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { Film } from '../../interfaces/films.interfaces';
 import { FilmsService } from '../../services/films.service';
 import { successToast, failToast } from '../../../shared/helpers/SwalToast.helper';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { successToast, failToast } from '../../../shared/helpers/SwalToast.helpe
   templateUrl: './film-card.component.html',
   styleUrls: ['./film-card.style.css']
 })
-export class FilmCardComponent implements OnInit, AfterViewInit {
+export class FilmCardComponent implements OnInit {
 
   @Input() film!: Film;
   @Output() filmDeleted: EventEmitter<void> = new EventEmitter();
@@ -26,7 +27,12 @@ export class FilmCardComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
   }
 
-  ngAfterViewInit() {
+  get filmImage() {
+    if (this.film.img && !this.film.img.includes('/')) {
+      return `${environment.filmsImageUrl}/${this.film.id}`;
+    } else {
+      return this.film.img;
+    }
   }
 
   borrarPelicula(id: number) {
@@ -60,15 +66,15 @@ export class FilmCardComponent implements OnInit, AfterViewInit {
         <form id="form" style="overflow-x: hidden">
           <div class="row align-items-center justify-content-center mb-2">
             <label class="col-md-3 col-sm-6">Título</label>
-            <input class="swal2-input col-auto" type="text" id="titulo" value="${this.film.titulo}" required >
+            <input class="swal2-input col-6" type="text" id="titulo" value="${this.film.titulo}" required >
           </div>
           <div class="row align-items-center justify-content-center mb-2">
             <label class="col-md-3 col-sm-6">Estreno</label>
-            <input class="swal2-input col-auto" type="text" id="estreno" value="${this.film.estreno}" required >
+            <input class="swal2-input col-6" type="text" id="estreno" value="${this.film.estreno}" required >
           </div>
           <div class="row align-items-center justify-content-center mb-2">
             <label class="col-md-3 col-sm-6">Género</label>
-            <select class="swal2-input col-auto" id="genero">
+            <select class="swal2-input col-6" id="genero">
               <option selected disabled hidden>---Seleccione---</option>
               <option value="acción">Acción</option>
               <option value="animación">Animación</option>
@@ -96,7 +102,7 @@ export class FilmCardComponent implements OnInit, AfterViewInit {
           </div>
           <div class="row align-items-center justify-content-center">
             <label class="col-md-3 col-sm-6">Imagen</label>
-            <input class="swal2-input col-auto" type="text" id="imagen" value="${this.film.img}" required >
+            <input class="swal2-input col-6" type="text" id="imagen" value="${this.film.img}" required >
           </div>
         </form>
       `,

@@ -65,37 +65,12 @@ export class AddPageComponent implements OnInit {
     this._imagen_mostrar = value;
   }
   get imagen_mostrar() {
-    return this._imagen_mostrar;
+    return this._imagen_mostrar as string;
   }
 
-  private _newFilmForm!: FormGroup;
-  set newFilmForm(value: FormGroup) {
-    this._newFilmForm = value;
-  }
-  get newFilmForm() {
-    return this._newFilmForm;
-  }
-
-  imagen_subir: boolean = false;
-
-  constructor(private filmService: FilmsService, private router: Router, private authService: AuthService) { }
+  constructor() { }
 
   ngOnInit(): void {
-
-  }
-
-  addFilm() {
-    if (this.newFilmForm) {
-        if (this.newFilmForm.invalid) {
-          return;
-        }
-      const UserId = this.authService.user.id;
-      const newFilm: Film = { UserId, ...this.newFilmForm.value };
-      console.log(newFilm);
-      this.filmService.insertOneFilm(newFilm)
-        .subscribe();
-      this.router.navigateByUrl('/films/list');
-    }
 
   }
 

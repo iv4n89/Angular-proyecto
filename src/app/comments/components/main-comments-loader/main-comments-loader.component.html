@@ -1,15 +1,16 @@
 <div class="container pt-5">
-  <div class="row">
-    <div class="col-5 d-flex justify-content-evenly">
-      <img [src]="film.img" alt="pelicula" style="max-width: 300px; max-height: 450px; border-radius: 10px;">
+  <div class="row film-info">
+    <div class="col-md-5 col-sm-10 justify-content-center d-flex">
+      <img [src]="filmImage" alt="pelicula">
     </div>
-    <div class="col-5">
+    <div class="col-md-5 col-sm-10 ">
       <h1>{{ film.titulo | titlecase }}</h1>
       <h3>Estreno: {{ film.estreno }}</h3>
       <h3>Duración: {{ film.duracion }} minutos</h3>
       <h3>Género: {{ film.genero | titlecase}}</h3>
       <div class="comment-container" style="background-color: transparent !important;">
-        <big-stars [initial_stars]="film.puntuacion_media! / 2" *ngIf="film.puntuacion_media! >= 0" color="#11101d">
+        <big-stars [initial_stars]="film.puntuacion_media! / 2" *ngIf="film.puntuacion_media! >= 0" color="#11101d"
+          [size]="screen">
         </big-stars>
       </div>
     </div>
@@ -45,9 +46,11 @@
           </app-edit-comment>
         </div>
         <ng-template #noLogin>
-          <p style="text-align: center;">Necesita estar logueado para comentar</p>
-          <p style="text-align: center;">¿Ya tienes cuenta? Logueate <a routerLink="/auth/login">aquí</a></p>
-          <p style="text-align: center;">¿Aún no eres miembro? <a routerLink="/auth/register">Regístrate</a></p>
+          <div style="color: black !important;">
+            <p style="text-align: center;">Necesita estar logueado para comentar</p>
+            <p style="text-align: center;">¿Ya tienes cuenta? Logueate <a routerLink="/auth/login">aquí</a></p>
+            <p style="text-align: center;">¿Aún no eres miembro? <a routerLink="/auth/register">Regístrate</a></p>
+          </div>
         </ng-template>
       </ng-template>
     </div>

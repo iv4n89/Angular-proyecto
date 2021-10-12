@@ -35,5 +35,10 @@ export class FilmsService implements IFilmService {
   deleteOneFilm(id: number): Observable<void> {
     return this.http.delete<void>(`${this.url}/films/${id}`, { headers: this.headers });
   }
+  uploadFilmImage(id: number, file: File): Observable<void> {
+    const formData = new FormData();
+    formData.append('archivo', file, file.name);
+    return this.http.put<void>(`${this.url}/films/image/${id}`, formData, { headers: this.headers });
+  }
 }
 

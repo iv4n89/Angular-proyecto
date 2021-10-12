@@ -1,11 +1,9 @@
 import { Component, Input, OnInit, HostListener, Output, EventEmitter } from '@angular/core';
 
 import { Film } from 'src/app/films/interfaces/films.interfaces';
-
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Comment } from '../../interfaces/comments.interfaces';
-import Swal from 'sweetalert2';
-import { failToast } from 'src/app/shared/helpers/SwalToast.helper';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -44,6 +42,14 @@ export class MainCommentsLoaderComponent implements OnInit {
     }
   }
 
+  get filmImage() {
+    if (this.film.img && !this.film.img.includes('/')) {
+      return `${environment.filmsImageUrl}/${this.film.id}`;
+    } else {
+      return this.film.img;
+    }
+  }
+
   constructor( private authService: AuthService) {
     this.innerWidth = window.innerWidth;
   }
@@ -54,7 +60,6 @@ export class MainCommentsLoaderComponent implements OnInit {
         this.editComment = true;
       }
     }, 50);
-    // console.log(this.comentario);
   }
 
   @HostListener('window:resize', ['$event']) onResize(event: any) {

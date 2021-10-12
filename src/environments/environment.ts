@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   baseUrl: 'http://localhost:3000/api',
+  filmsImageUrl: 'http://localhost:3000/api/films/image',
   avatars: [
     'assets/avatars/1.png',
     'assets/avatars/2.png',

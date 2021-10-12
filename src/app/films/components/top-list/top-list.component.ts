@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 import { Film } from '../../interfaces/films.interfaces';
 
@@ -37,6 +38,14 @@ export class TopListComponent implements OnInit {
   @Input() index!: number;
 
   constructor() { }
+
+  get filmImage() {
+    if (this.film.img && !this.film.img.includes('/')) {
+      return `${environment.filmsImageUrl}/${this.film.id}`;
+    } else {
+      return this.film.img;
+    }
+  }
 
   ngOnInit(): void {
   }
