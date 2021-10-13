@@ -1,8 +1,8 @@
 <div class="login-contenedor d-flex justify-content-center align-items-center">
   <div class="container">
-    <div class="row justify-content-center">
-      <div class="card">
-        <div [ngClass]="{'p-5': innerWidth >= 570, 'p-1': innerWidth <= 570}">
+    <div [ngClass]="{'padding-top-auth-mobile': innerWidth <= 1400, 'pb-5': true}">
+      <div class="row justify-content-center pos-relative">
+        <div class="card">
           <router-outlet></router-outlet>
         </div>
       </div>

@@ -11,6 +11,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { SharedModule } from '../shared/shared.module';
 import { UserDetailsPageComponent } from './pages/user-details-page/user-details-page.component';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { UserDetailsComponent } from './components/user-details/user-details.com
     CommonModule,
     AuthRoutingModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    NgbModule
   ]
 })
 export class AuthModule { }

@@ -7,16 +7,139 @@
   font-family: Poppins-Medium;
 }
 
+.padding-top-auth-mobile {
+  padding-top: 200px;
+}
 
 .details-container {
   position: relative;
 }
 
+.avatar-image {
+  width: 240px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+@media screen and (max-width: 570px) {
+  .avatar-image {
+    width: 200px;
+    height: 160px;
+  }
+}
+
 .logout {
   position: absolute;
-  right: -50px;
-  top: -40px;
+  right: 0;
+  top: 10px;
+  transition: all ease 0.5s;
+  color: black !important;
+  background-color: transparent !important;
+  border: none !important;
+  z-index: 10;
 }
+.logout:hover {
+  cursor: pointer;
+  background-color: red !important;
+  color: white !important;
+  transition: all ease 0.5s;
+}
+
+.edit-btn {
+  color: blue;
+  transition: all ease 0.5s;
+  border: none !important;
+  box-shadow: none !important;
+  position: absolute;
+  bottom: 30px;
+  right: 0;
+}
+.edit-btn:hover {
+  color: white;
+  background-color: blue;
+  transition: all ease 0.5s;
+}
+
+.delete-btn {
+  color: red;
+  transition: all ease 0.5s;
+  border: none !important;
+  box-shadow: none !important;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+.delete-btn:hover {
+  color: white;
+  background-color: red;
+  transition: all ease 0.5s;
+}
+
+.file-upload-btn {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  z-index: -1;
+  position: absolute;
+}
+.file-upload-btn + label {
+  width: 100%;
+  text-align: center;
+  border-radius: 10px;
+  color: #c11de0;
+  background-color: transparent;
+  display: inline-block;
+  transition: all ease 0.5s;
+}
+.file-upload-btn:focus + label,
+.file-upload-btn + label:hover {
+  background-color: #c11de0;
+  color: white;
+  transition: all ease 0.5s;
+}
+
+.default-avatars-btn-actived {
+  background: linear-gradient(to right, transparent 10%, #d1d3eb 70%, #d1d3eb 50%);
+}
+.btn{
+  box-shadow: none !important;
+}
+
+.corner-top {
+  width: 60px;
+  height: 60px;
+  /* background-color: #6f7aed; */
+  position: absolute;
+  overflow: hidden;
+  right: 20px;
+  top: 10px;
+  z-index: -1;
+}
+.corner-bot {
+  width: 60px;
+  height: 60px;
+  /* background: radial-gradient(100% 85% at top left, transparent 90%, #6f7aed 50%); */
+  position: absolute;
+  overflow: hidden;
+  right: 20px;
+  top: 105px;
+  transform: rotateX(180deg);
+  z-index: -1;
+}
+
+.default-avatars {
+  position: absolute;
+  background-color: #d1d3eb;
+  border-radius: 15px;
+  padding: 10px;
+  right: -280px;
+  width: 300px;
+  height: 180px;
+  top: -5px;
+}
+
 
 [readonly].form-control {
   background-color: #fff;
@@ -25,7 +148,7 @@
 
 [readonly].form-control:focus {
   box-shadow: none;
-  border-color: white !important;
+  border-color: none !important;
   transition: all 0.1s linear;
   box-shadow: inset 0px 0px 0px 1px white !important;
 }
@@ -59,17 +182,17 @@ button.registerButton:hover {
 }
 
 .row>.card {
-  max-width: 800px;
+  max-width: 450px;
   /* margin-top: 10%; */
 }
 
 .closed {
-  height: 200px;
+  min-height: max-content;
   transition: all ease 0.3s;
 }
 
 .open {
-  height: 470px;
+  min-height: max-content;
   transition: all ease 0.3s;
 }
 
@@ -164,7 +287,7 @@ input[type="radio"][id^=img] {
 }
 
 label.imageLabel {
-  border: 1px solid #fff;
+  /* border: 1px solid #fff; */
   padding: 10px;
   position: relative;
   cursor: pointer;
@@ -176,8 +299,8 @@ label.imageLabel::before {
   color: white;
   content: " ";
   display: block;
-  border-radius: 50%;
-  border: 1px solid grey;
+  /* border-radius: 50%; */
+  /* border: 1px solid grey; */
   position: absolute;
   top: -5px;
   left: -5px;

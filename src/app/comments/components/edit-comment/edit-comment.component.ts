@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { environment } from 'src/environments/environment';
 
 import { Comment } from '../../interfaces/comments.interfaces';
+import { UserService } from '../../../auth/services/user.service';
 
 @Component({
   selector: 'app-edit-comment',
@@ -23,6 +24,8 @@ export class EditCommentComponent implements OnInit {
       UserId: [0]
     });
 
+  innerWidth: number;
+
   get username() {
     return this.comment?.user?.name || this.authService.user.name;
   }
@@ -33,10 +36,19 @@ export class EditCommentComponent implements OnInit {
     this.commentForm.controls['puntuacion'].setValue(value * 2);
   }
   get avatar() {
-    return this.comment?.user?.img || this.authService.user.img || environment.avatars[environment.avatars.length-1];
+    return this.UserService.getUserImage(this.authService.user);
+  }
+  get screen() {
+    if (this.innerWidth >= 570) {
+      return 4;
+    } else {
+      return 2;
+    }
   }
 
-  constructor( private fb: FormBuilder, private authService: AuthService) { }
+  constructor(private fb: FormBuilder, private authService: AuthService, private UserService: UserService) {
+    this.innerWidth = window.innerWidth;
+  }
 
   ngOnInit(): void {
     if (this.comment) {
@@ -58,6 +70,10 @@ export class EditCommentComponent implements OnInit {
 
   onRating(value: number) {
     this.puntuacion = value;
+  }
+
+  @HostListener('window:resize', ['$event']) onResize(event: any) {
+    this.innerWidth = window.innerWidth;
   }
 
 }

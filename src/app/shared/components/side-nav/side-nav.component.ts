@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { successToast } from '../../helpers/SwalToast.helper';
 import { environment } from 'src/environments/environment';
+import { UserService } from 'src/app/auth/services/user.service';
 
 @Component({
   selector: 'app-side-nav',
@@ -26,10 +27,10 @@ export class SideNavComponent implements OnInit {
     return this.authService.user.role.split('_')[0];
   }
   get avatar() {
-    return this.authService.user.img || environment.avatars[environment.avatars.length - 1];
+    return this.userService.getUserImage(this.authService.user);
   }
 
-  constructor(private fb: FormBuilder, private buscadorService: BuscadorService, private router: Router, private authService: AuthService) {
+  constructor(private fb: FormBuilder, private buscadorService: BuscadorService, private router: Router, private authService: AuthService, private userService: UserService) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => {
       return false;
     };

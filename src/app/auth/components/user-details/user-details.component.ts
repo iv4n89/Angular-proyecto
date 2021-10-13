@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User, UserForm } from '../../interfaces/user.interfaces';
 import Swal from 'sweetalert2';
 import { passwordMustntMatch } from 'src/app/shared/validators/custom-validators/custom-validators.component';
 import { environment } from 'src/environments/environment';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-user-details',
@@ -11,6 +12,11 @@ import { environment } from 'src/environments/environment';
   styleUrls: [`../../pages/styles/auth.styles.css`]
 })
 export class UserDetailsComponent implements OnInit {
+
+  file: File | null = null;
+  fileUrl: string = "";
+  _defaultAvatars: boolean = false;
+  innerWidth: number;
 
   @Input('userDetails') user!: User;
   @Output() deleteEmitter: EventEmitter<boolean> = new EventEmitter();
@@ -26,6 +32,9 @@ export class UserDetailsComponent implements OnInit {
   get role() {
     return this.user.role;
   }
+  get avatar() {
+    return this.userService.getUserImage(this.user);
+  }
 
   avatars: string[] = [...environment.avatars];
 
@@ -39,14 +48,16 @@ export class UserDetailsComponent implements OnInit {
     password: ['', Validators.minLength(6)],
     password2: ['', Validators.minLength(6)],
     role: ['', [Validators.required]],
-    img: [this.avatars[this.avatars.length - 1]]
+    img: ['']
   }, {
     validator: passwordMustntMatch('password', 'password2')
   });
 
   isEditing: boolean = false;
 
-  constructor( private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private userService: UserService) {
+    this.innerWidth = window.innerWidth;
+  }
 
   ngOnInit(): void {
     this.valoresForm();
@@ -57,6 +68,10 @@ export class UserDetailsComponent implements OnInit {
     this.isEditing = !this.isEditing;
 
     // this.isEditing = !this.isEditing;
+  }
+
+  defaultAvatars() {
+    this._defaultAvatars = !this._defaultAvatars;
   }
 
   valoresForm() {
@@ -80,8 +95,15 @@ export class UserDetailsComponent implements OnInit {
     controls.forEach(control => {
       this.userForm.controls[control].markAsTouched();
     });
-    if (this.userForm.valid) {
-      this.editEmitter.emit(this.userForm.value);
+    if (this.userForm.valid && this.isEditing === true) {
+      if (this.file) {
+        this.userService.uploadUserImage(this.user.id!, this.file!)
+          .subscribe(result => {
+            this.editEmitter.emit(this.userForm.value);
+          });
+      } else {
+        this.editEmitter.emit(this.userForm.value);
+      }
     }
   }
 
@@ -106,6 +128,23 @@ export class UserDetailsComponent implements OnInit {
         })
       }
     });
+  }
+
+  avatarUpload(event: any) {
+    if (!event.target.files[0] || event.target.files[0].length === 0) {
+      return;
+    }
+    const reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+
+    reader.onload = (_event) => {
+      this.file = event.target.files[0];
+      this.fileUrl = reader.result as string;
+    }
+  }
+
+  @HostListener('window:resize', ['$event']) onResize(event: any) {
+    this.innerWidth = window.innerWidth;
   }
 
 }

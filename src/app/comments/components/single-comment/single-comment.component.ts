@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
+import { UserService } from 'src/app/auth/services/user.service';
 import { failToast } from 'src/app/shared/helpers/SwalToast.helper';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
@@ -16,7 +17,8 @@ export class SingleCommentComponent implements OnInit {
   @Output() onEdit: EventEmitter<boolean> = new EventEmitter();
   @Output() onDelete: EventEmitter<number> = new EventEmitter();
 
-  defaultAvatar = [...environment.avatars][environment.avatars.length-1];
+  defaultAvatar = [...environment.avatars][environment.avatars.length - 1];
+  innerWidth: number;
 
   get puntuacion() {
     return this.comment?.puntuacion / 2;
@@ -25,10 +27,12 @@ export class SingleCommentComponent implements OnInit {
     return this.comment?.user?.name;
   }
   get avatar() {
-    return this.comment.user?.img || this.defaultAvatar;
+    return this.userService.getUserImage(this.comment.user!);
   }
 
-  constructor( ) { }
+  constructor(private userService: UserService) {
+    this.innerWidth = window.innerWidth;
+  }
 
   ngOnInit(): void {
 
@@ -54,6 +58,10 @@ export class SingleCommentComponent implements OnInit {
         failToast('Acción cancelada');
       }
     });
+  }
+
+  @HostListener('window:resize', ['$event']) onResize(event: any) {
+    this.innerWidth = window.innerWidth;
   }
 
 }

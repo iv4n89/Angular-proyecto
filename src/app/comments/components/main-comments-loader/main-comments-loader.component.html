@@ -32,8 +32,8 @@
   </div>
 </div>
 <hr>
-<div class="container mt-5">
-  <div class="container me-3 ms-3">
+<div class="mt-5" [ngClass]="{'container': innerWidth >= 570}">
+  <div [ngClass]="{'container me-3 ms-3': innerWidth >= 570}">
     <div class="comment-container">
       <div class="animate__animated animate__fadeIn"
         *ngIf="editComment === false && isLogged === true; else sinComentario">

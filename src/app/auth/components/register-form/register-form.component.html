@@ -1,114 +1,94 @@
-<form autocomplete="off" [formGroup]="newUserForm" (ngSubmit)="customSubmit()">
+<form autocomplete="off" [formGroup]="newUserForm" (ngSubmit)="customSubmit()" class="p-5">
   <div class="row">
-    <div class="col-5">
-      <div class="mb-3">
-        <label class="form-label">Nombre: </label>
-        <input type="text" class="form-control" formControlName="name">
-        <span errorMessage [valid]="!tieneError('name', 'required')" message="El nombre es obligatorio"></span>
+    <ul ngbNav #nav="ngbNav" class="nav-tabs">
+      <li ngbNavItem>
+        <a ngbNavLink>Datos</a>
+        <ng-template ngbNavContent>
+          <div class="col-12">
+            <div class="mb-3">
+              <label class="form-label">Nombre: </label>
+              <input type="text" class="form-control" formControlName="name">
+              <span errorMessage [valid]="!tieneError('name', 'required')" message="El nombre es obligatorio"></span>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">E-mail: </label>
+              <input type="email" class="form-control" formControlName="email">
+              <span errorMessage [valid]="!tieneError('email', 'required')" message="El email es obligatorio"></span>
+              <span errorMessage [valid]="!tieneError('email', 'email')" message="No es un email válido"></span>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Password: </label>
+              <input type="password" class="form-control" formControlName="password">
+              <span errorMessage [valid]="!tieneError('password', 'required')"
+                message="La contraseña es requerida"></span>
+              <span errorMessage [valid]="!tieneError('password', 'minlength')"
+                message="La contraseña debe tener al menos 6 caracteres"></span>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Confirmar password: </label>
+              <input type="password" class="form-control" formControlName="password2">
+              <span errorMessage [valid]="!tieneError('password2', 'required')"
+                message="Debe validar la contraseña"></span>
+              <span errorMessage [valid]="!tieneError('password2', 'passwordMissmatch')"
+                message="Ambas contraseñas deben ser iguales"></span>
+            </div>
+            <div class="mb-3" *adminOnly>
+              <label class="form-label">Rol: </label>
+              <div class="form-check">
+                <label class="form-check-label"><input type="radio" class="form-check-input" value="USER_ROLE" checked
+                    formControlName="role">Usuario</label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label"><input type="radio" class="form-check-input" value="ADMIN_ROLE"
+                    formControlName="role">Administrador</label>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </li>
+      <li ngbNavItem>
+        <a ngbNavLink>Avatar</a>
+        <ng-template ngbNavContent>
+          <div class="col-12">
+            <div class="mb-1">
+              <label class="form-label">Subir avatar: </label>
+              <input id="file" type="file" class="file-upload-btn" (change)="avatarUpload($event)">
+              <label for="file">Elige archivo</label>
+            </div>
+            <div class="d-flex justify-content-center">
+              <img [src]="fileUrl" alt="new avatar" *ngIf="fileUrl !== ''"
+                style="object-fit: cover; max-width: 150px; border-radius: 15px;">
+            </div>
+            <div class="d-block">
+              <span>Avatares por defecto: </span>
+              <ul class="d-flex flex-wrap justify-content-evenly">
+                <li><input type="radio" id="img1" [value]="getAvatar(0)" formControlName="img" />
+                  <label class="imageLabel" for="img1"><img [src]="getAvatar(0)" /></label>
+                </li>
+                <li><input type="radio" id="img2" [value]="getAvatar(1)" formControlName="img" />
+                  <label class="imageLabel" for="img2"><img [src]="getAvatar(1)" /></label>
+                </li>
+                <li><input type="radio" id="img3" [value]="getAvatar(2)" formControlName="img" />
+                  <label class="imageLabel" for="img3"><img [src]="getAvatar(2)" /></label>
+                </li>
+                <li><input type="radio" id="img4" [value]="getAvatar(3)" formControlName="img" />
+                  <label class="imageLabel" for="img4"><img [src]="getAvatar(3)" /></label>
+                </li>
+                <li><input type="radio" id="img5" [value]="getAvatar(4)" formControlName="img" />
+                  <label class="imageLabel" for="img5"><img [src]="getAvatar(4)" /></label>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </ng-template>
+      </li>
+    </ul>
+    <div [ngbNavOutlet]="nav" class="mt-2"></div>
+    <div class="row mb-3 justify-content-center">
+      <div class="wrap-login-form-btn">
+        <div class="login-form-background-btn"></div>
+        <button type="submit" class="btn btn-dark registerButton">Registro</button>
       </div>
-      <div class="mb-3">
-        <label class="form-label">E-mail: </label>
-        <input type="email" class="form-control" formControlName="email">
-        <span errorMessage [valid]="!tieneError('email', 'required')" message="El email es obligatorio"></span>
-        <span errorMessage [valid]="!tieneError('email', 'email')" message="No es un email válido"></span>
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Password: </label>
-        <input type="password" class="form-control" formControlName="password">
-        <span errorMessage [valid]="!tieneError('password', 'required')" message="La contraseña es requerida"></span>
-        <span errorMessage [valid]="!tieneError('password', 'minlength')"
-          message="La contraseña debe tener al menos 6 caracteres"></span>
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Confirmar password: </label>
-        <input type="password" class="form-control" formControlName="password2">
-        <span errorMessage [valid]="!tieneError('password2', 'required')" message="Debe validar la contraseña"></span>
-        <span errorMessage [valid]="!tieneError('password2', 'passwordMissmatch')"
-          message="Ambas contraseñas deben ser iguales"></span>
-      </div>
-      <div class="mb-3" *adminOnly>
-        <label class="form-label">Rol: </label>
-        <div class="form-check">
-          <label class="form-check-label"><input type="radio" class="form-check-input" value="USER_ROLE" checked
-              formControlName="role">Usuario</label>
-        </div>
-        <div class="form-check">
-          <label class="form-check-label"><input type="radio" class="form-check-input" value="ADMIN_ROLE"
-              formControlName="role">Administrador</label>
-        </div>
-      </div>
-      <div>
-      </div>
-      <div class="row mb-3 justify-content-center">
-        <div class="wrap-login-form-btn">
-          <div class="login-form-background-btn"></div>
-          <button type="submit" class="btn btn-dark registerButton">Registro</button>
-        </div>
-      </div>
-    </div>
-    <div class="col-7">
-      <ul class="d-flex justify-content-evenly flex-wrap">
-        <li><input type="radio" id="img1" [value]="getAvatar(0)" formControlName="img" />
-          <label class="imageLabel" for="img1"><img [src]="getAvatar(0)" /></label>
-        </li>
-        <li><input type="radio" id="img2" [value]="getAvatar(1)" formControlName="img" />
-          <label class="imageLabel" for="img2"><img [src]="getAvatar(1)" /></label>
-        </li>
-        <li><input type="radio" id="img3" [value]="getAvatar(2)" formControlName="img" />
-          <label class="imageLabel" for="img3"><img [src]="getAvatar(2)" /></label>
-        </li>
-        <li><input type="radio" id="img4" [value]="getAvatar(3)" formControlName="img" />
-          <label class="imageLabel" for="img4"><img [src]="getAvatar(3)" /></label>
-        </li>
-        <li><input type="radio" id="img5" [value]="getAvatar(4)" formControlName="img" />
-          <label class="imageLabel" for="img5"><img [src]="getAvatar(4)" /></label>
-        </li>
-        <li><input type="radio" id="img6" [value]="getAvatar(5)" formControlName="img" />
-          <label class="imageLabel" for="img6"><img [src]="getAvatar(5)" /></label>
-        </li>
-        <li><input type="radio" id="img7" [value]="getAvatar(6)" formControlName="img" />
-          <label class="imageLabel" for="img7"><img [src]="getAvatar(6)" /></label>
-        </li>
-        <li><input type="radio" id="img8" [value]="getAvatar(7)" formControlName="img" />
-          <label class="imageLabel" for="img8"><img [src]="getAvatar(7)" /></label>
-        </li>
-        <li><input type="radio" id="img9" [value]="getAvatar(8)" formControlName="img" />
-          <label class="imageLabel" for="img9"><img [src]="getAvatar(8)" /></label>
-        </li>
-        <li><input type="radio" id="img10" [value]="getAvatar(9)" formControlName="img" />
-          <label class="imageLabel" for="img10"><img [src]="getAvatar(9)" /></label>
-        </li>
-        <li><input type="radio" id="img11" [value]="getAvatar(10)" formControlName="img" />
-          <label class="imageLabel" for="img11"><img [src]="getAvatar(10)" /></label>
-        </li>
-        <li><input type="radio" id="img12" [value]="getAvatar(11)" formControlName="img" />
-          <label class="imageLabel" for="img12"><img [src]="getAvatar(11)" /></label>
-        </li>
-        <li><input type="radio" id="img13" [value]="getAvatar(12)" formControlName="img" />
-          <label class="imageLabel" for="img13"><img [src]="getAvatar(12)" /></label>
-        </li>
-        <li><input type="radio" id="img14" [value]="getAvatar(13)" formControlName="img" />
-          <label class="imageLabel" for="img14"><img [src]="getAvatar(13)" /></label>
-        </li>
-        <li><input type="radio" id="img15" [value]="getAvatar(14)" formControlName="img" />
-          <label class="imageLabel" for="img15"><img [src]="getAvatar(14)" /></label>
-        </li>
-        <li><input type="radio" id="img16" [value]="getAvatar(15)" formControlName="img" />
-          <label class="imageLabel" for="img16"><img [src]="getAvatar(15)" /></label>
-        </li>
-        <li><input type="radio" id="img17" [value]="getAvatar(16)" formControlName="img" />
-          <label class="imageLabel" for="img17"><img [src]="getAvatar(16)" /></label>
-        </li>
-        <li><input type="radio" id="img18" [value]="getAvatar(17)" formControlName="img" />
-          <label class="imageLabel" for="img18"><img [src]="getAvatar(17)" /></label>
-        </li>
-        <li><input type="radio" id="img19" [value]="getAvatar(18)" formControlName="img" />
-          <label class="imageLabel" for="img19"><img [src]="getAvatar(18)" /></label>
-        </li>
-        <li><input type="radio" id="img20" [value]="getAvatar(19)" formControlName="img" />
-          <label class="imageLabel" for="img20"><img [src]="getAvatar(19)" /></label>
-        </li>
-      </ul>
     </div>
   </div>
 </form>

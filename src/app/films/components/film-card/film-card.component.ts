@@ -28,11 +28,12 @@ export class FilmCardComponent implements OnInit {
   }
 
   get filmImage() {
-    if (this.film.img && !this.film.img.includes('/')) {
-      return `${environment.filmsImageUrl}/${this.film.id}`;
-    } else {
-      return this.film.img;
-    }
+    // if (this.film.img && !this.film.img.includes('/')) {
+    //   return `${environment.filmsImageUrl}/${this.film.id}`;
+    // } else {
+    //   return this.film.img;
+    // }
+    return this.filmService.getFilmImage(this.film);
   }
 
   borrarPelicula(id: number) {

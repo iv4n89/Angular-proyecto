@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
 import { UserService } from '../../services/user.service';
-import { UserForm } from '../../interfaces/user.interfaces';
+import { UserForm, UserResponse } from '../../interfaces/user.interfaces';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -13,6 +13,8 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['../styles/auth.styles.css']
 })
 export class RegisterComponent implements OnInit {
+
+  file: File | null = null;
 
   constructor(private userService: UserService, private router:Router, private authService: AuthService) { }
 
@@ -26,7 +28,13 @@ export class RegisterComponent implements OnInit {
         this.userService.insertOneUser({ name, email, password, role, img })
         .subscribe(
           response => {
-            if (response === true) {
+            if (this.file) {
+              this.userService.uploadUserImage(response.user?.id!, this.file)
+                .subscribe(upload => {
+
+                });
+            }
+            if (response.ok === true) {
               Swal.fire('OK', 'Usuario creado', 'success')
                 .then(result => {
                   if (!localStorage.getItem('token')) {
@@ -35,10 +43,14 @@ export class RegisterComponent implements OnInit {
                   }
                 });
             } else {
-              Swal.fire('Error', response, 'error');
+              Swal.fire('Error', 'Ocurrió un error', 'error');
             }
           });
         }
-    }
+  }
+
+  avatarFile(file: File) {
+    this.file = file;
+  }
 
 }

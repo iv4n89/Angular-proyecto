@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthService } from 'src/app/auth/services/auth.service';
-import { Film } from '../../interfaces/films.interfaces';
 
-import { FilmsService } from '../../services/films.service';
 
 @Component({
   selector: 'app-add-page',
@@ -65,7 +60,7 @@ export class AddPageComponent implements OnInit {
     this._imagen_mostrar = value;
   }
   get imagen_mostrar() {
-    return this._imagen_mostrar as string;
+    return this._imagen_mostrar;
   }
 
   constructor() { }

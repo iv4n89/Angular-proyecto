@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, HostListener } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { UserForm } from '../../interfaces/user.interfaces';
@@ -12,7 +12,11 @@ import { environment } from 'src/environments/environment';
 })
 export class RegisterFormComponent implements OnInit {
 
-  avatars: string[] = [ ...environment.avatars ];
+  avatars: string[] = [...environment.avatars];
+  _defaultAvatars: boolean = false;
+  innerWidth: number;
+  file: File | null = null;
+  fileUrl: string = "";
 
   newUserForm: FormGroup = this.fb.group({
     name: ['', [Validators.required]],
@@ -26,15 +30,22 @@ export class RegisterFormComponent implements OnInit {
   });
 
   @Output() registerEmitter: EventEmitter<UserForm> = new EventEmitter();
+  @Output() fileEmitter: EventEmitter<File> = new EventEmitter();
 
   getAvatar(number: number) {
     return this.avatars[number];
   }
 
-  constructor( private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder) {
+    this.innerWidth = window.innerWidth;
+  }
 
   ngOnInit(): void {
 
+  }
+
+  defaultAvatars() {
+    this._defaultAvatars = !this._defaultAvatars;
   }
 
   tieneError(campo: string, errorName: string): boolean {
@@ -53,8 +64,28 @@ export class RegisterFormComponent implements OnInit {
       this.newUserForm.controls[control].markAsTouched();
     });
     if (this.newUserForm.valid) {
+      if (this.file) {
+        this.fileEmitter.emit(this.file);
+      }
       this.registerEmitter.emit(this.newUserForm.value);
       this.newUserForm.reset();
+    }
+  }
+
+  @HostListener('window:resize', ['$event']) onResize(event: any) {
+    this.innerWidth = window.innerWidth;
+  }
+
+  avatarUpload(event: any) {
+    if (!event.target.files[0] || event.target.files[0].length === 0) {
+      return;
+    }
+    const reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+
+    reader.onload = (_event) => {
+      this.file = event.target.files[0];
+      this.fileUrl = reader.result as string;
     }
   }
 

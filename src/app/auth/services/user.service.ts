@@ -34,10 +34,9 @@ export class UserService implements IUserService {
         map(res => res.name!)
       )
   }
-  insertOneUser(user: User) {
+  insertOneUser(user: User): Observable<UserResponse> {
     return this.http.post<UserResponse>(`${this.url}/users`, user)
       .pipe(
-        map(resp => resp.ok),
         catchError(err => of(err.error.msg))
       );
   }
@@ -50,7 +49,8 @@ export class UserService implements IUserService {
       );
   }
   deleteOneUser(userId: number) {
-    return this.http.delete<UserResponse>(`${this.url}/users/${userId}`)
+    const headers = new HttpHeaders().set('x-token', localStorage.getItem('token')!);
+    return this.http.delete<UserResponse>(`${this.url}/users/${userId}`, { headers })
       .pipe(
         map(resp => resp.ok),
         catchError(err => of(err.error.msg))
@@ -63,5 +63,19 @@ export class UserService implements IUserService {
         map(resp => resp.ok),
         catchError(err => of(err.error.msg))
       );
+  }
+
+  uploadUserImage(id: number, file: File): Observable<void> {
+    const formData = new FormData();
+    formData.append('archivo', file, file.name);
+    return this.http.put<void>(`${this.url}/upload/users/${id}`, formData);
+  }
+
+  getUserImage(user: User) {
+    if (user?.img && !user?.img.includes('/')) {
+      return `${environment.usersImageUrl}/${user?.id}`;
+    } else {
+      return user?.img;
+    }
   }
 }

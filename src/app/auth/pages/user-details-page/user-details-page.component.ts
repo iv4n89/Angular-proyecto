@@ -32,33 +32,41 @@ export class UserDetailsPageComponent implements OnInit {
 
   editUser(user: UserForm) {
     let { name, email, password, password2, role, img } = user;
+    let newUser: User;
+    if (img === "") {
+      newUser = { name, email, password, role };
+    } else {
+      newUser = { name, email, password, role, img };
+    }
     let id = this.authService.user.id;
-    this.userService.checkPassword(email, password)
-      .pipe(
-        switchMap(resp => {
-          console.log(resp)
-          if (resp === true) {
-            if (password2) password = password2;
-            return this.userService.updateOneUser(Number(id), { name, email, password, role, img })
-              .pipe(
-                map(resp => {
-                  this.authService.validarToken().subscribe();
-                  return resp;
-                })
-              )
-          } else {
-            return of(false);
+    if (this.edit_user === true) {
+      this.userService.checkPassword(email, password)
+        .pipe(
+          switchMap(resp => {
+            console.log(resp)
+            if (resp === true) {
+              if (password2) password = password2;
+              return this.userService.updateOneUser(Number(id), newUser)
+                .pipe(
+                  map(resp => {
+                    this.authService.validarToken().subscribe();
+                    return resp;
+                  })
+                )
+            } else {
+              return of(false);
+            }
+          })
+      ).subscribe(resp => {
+        console.log(resp)
+        if (resp === true) {
+          successToast('Usuario actualizado');
+          this.router.navigate([this.router.url]);
+        } else {
+          Swal.fire('Error', 'Contraseña incorrecta', 'error');
           }
-        })
-    ).subscribe(resp => {
-      console.log(resp)
-      if (resp === true) {
-        successToast('Usuario actualizado');
-        this.router.navigate([this.router.url]);
-      } else {
-        Swal.fire('Error', 'Contraseña incorrecta', 'error');
-        }
-      });
+        });
+    }
   }
 
   deleteUser(confirm: boolean) {
@@ -87,7 +95,6 @@ export class UserDetailsPageComponent implements OnInit {
   }
 
   editando(value: boolean) {
-    this.edit_user = !this.edit_user;
-    console.log(this.edit_user);
+    this.edit_user = value;
   }
 }

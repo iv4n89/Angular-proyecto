@@ -38,7 +38,14 @@ export class FilmsService implements IFilmService {
   uploadFilmImage(id: number, file: File): Observable<void> {
     const formData = new FormData();
     formData.append('archivo', file, file.name);
-    return this.http.put<void>(`${this.url}/films/image/${id}`, formData, { headers: this.headers });
+    return this.http.put<void>(`${this.url}/upload/films/${id}`, formData, { headers: this.headers });
+  }
+  getFilmImage(film: Film) {
+    if (film.img && !film.img.includes('/')) {
+      return `${environment.filmsImageUrl}/${film.id}`;
+    } else {
+      return film.img;
+    }
   }
 }
 
