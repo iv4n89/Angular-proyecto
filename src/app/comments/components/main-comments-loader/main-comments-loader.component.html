@@ -4,35 +4,33 @@
 <div class="container mt-5">
   <div class="row mb-3">
     <p style="text-align: center;"> Comentarios: {{ comentarios.length }} </p>
-    <div *ngFor="let coment of comentarios; let i = index" class="container comment-container">
+    <div *ngFor="let coment of comentarios; let i = index" class="container comment-container mb-2">
       <app-single-comment [comment]="coment" *ngIf="!isMyComment(coment)">
       </app-single-comment>
     </div>
   </div>
 </div>
 <hr>
-<div class="mt-5" [ngClass]="{'container': innerWidth >= 570}">
-  <div [ngClass]="{'container me-3 ms-3': innerWidth >= 570}">
-    <div class="comment-container">
-      <div class="animate__animated animate__fadeIn"
-        *ngIf="editComment === false && isLogged === true; else sinComentario">
-        <app-single-comment [comment]="comentario" [editar]="true" (onEdit)="setEditar($event)"
-          (onDelete)="delete($event)" *ngIf="comentario"></app-single-comment>
-      </div>
-      <ng-template #sinComentario>
-        <div *ngIf="isLogged === true; else noLogin" class="animate__animated animate__fadeIn">
-          <app-edit-comment [comment]="comentario" (onEdit)="comment($event)" (onCancel)="setEditar($event)">
-          </app-edit-comment>
-        </div>
-        <ng-template #noLogin>
-          <div style="color: black !important;">
-            <p style="text-align: center;">Necesita estar logueado para comentar</p>
-            <p style="text-align: center;">¿Ya tienes cuenta? Logueate <a routerLink="/auth/login">aquí</a></p>
-            <p style="text-align: center;">¿Aún no eres miembro? <a routerLink="/auth/register">Regístrate</a></p>
-          </div>
-        </ng-template>
-      </ng-template>
+<div [ngClass]="{'container me-3': innerWidth >= 570, 'mt-5': true}">
+  <div class="comment-container">
+    <div class="animate__animated animate__fadeIn"
+      *ngIf="editComment === false && isLogged === true; else sinComentario">
+      <app-single-comment [comment]="comentario" [editar]="true" (onEdit)="setEditar($event)"
+        (onDelete)="delete($event)" *ngIf="comentario"></app-single-comment>
     </div>
+    <ng-template #sinComentario>
+      <div *ngIf="isLogged === true; else noLogin" class="animate__animated animate__fadeIn">
+        <app-edit-comment [comment]="comentario" (onEdit)="comment($event)" (onCancel)="setEditar($event)">
+        </app-edit-comment>
+      </div>
+      <ng-template #noLogin>
+        <div style="color: black !important;">
+          <p style="text-align: center;">Necesita estar logueado para comentar</p>
+          <p style="text-align: center;">¿Ya tienes cuenta? Logueate <a routerLink="/auth/login">aquí</a></p>
+          <p style="text-align: center;">¿Aún no eres miembro? <a routerLink="/auth/register">Regístrate</a></p>
+        </div>
+      </ng-template>
+    </ng-template>
   </div>
 </div>
 <div class="pb-5"></div>
