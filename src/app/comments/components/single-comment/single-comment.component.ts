@@ -1,9 +1,11 @@
 import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
-import { UserService } from 'src/app/auth/services/user.service';
-import { failToast } from 'src/app/shared/helpers/SwalToast.helper';
-import { environment } from 'src/environments/environment';
+
 import Swal from 'sweetalert2';
+
 import { Comment } from '../../interfaces/comments.interfaces';
+import { environment } from 'src/environments/environment';
+import { failToast } from 'src/app/shared/helpers/SwalToast.helper';
+import { UserService } from 'src/app/auth/services/user.service';
 
 @Component({
   selector: 'app-single-comment',

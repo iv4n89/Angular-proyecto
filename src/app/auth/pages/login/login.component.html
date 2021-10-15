@@ -1,5 +1,5 @@
 <div class=" animate__animated animate__fadeIn">
-  <app-login-form (loginEmitter)="loginUser($event)"></app-login-form>
+  <app-login-form (onLogin)="loginUser($event)"></app-login-form>
   <div class="mb-3">
     <small class="card-text float-end">¿No tienes cuenta? Crea una <a routerLink="/auth/register">aquí</a>
     </small>

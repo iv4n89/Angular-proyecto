@@ -187,26 +187,13 @@ button.registerButton:hover {
 }
 
 .closed {
-  min-height: max-content;
-  transition: all ease 0.3s;
+  max-height: 400px;
+  transition: max-height ease-out 0.1s;
 }
 
 .open {
-  min-height: max-content;
-  transition: all ease 0.3s;
-}
-
-.opening {
-  background-color: white;
-  height: 200px;
-  width: 100%;
-  z-index: 10;
-  transition: all ease 0.2s;
-}
-
-.opened {
-  display: none;
-  transition: all ease 0.2s;
+  max-height: 1000px;
+  transition: max-height ease-in 0.2s;
 }
 
 .login-contenedor {

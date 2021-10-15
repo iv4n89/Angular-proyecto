@@ -7,7 +7,6 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { Film } from '../../interfaces/films.interfaces';
 import { FilmsService } from '../../services/films.service';
 import { successToast, failToast } from '../../../shared/helpers/SwalToast.helper';
-import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -18,7 +17,7 @@ import { environment } from 'src/environments/environment';
 export class FilmCardComponent implements OnInit {
 
   @Input() film!: Film;
-  @Output() filmDeleted: EventEmitter<void> = new EventEmitter();
+  @Output() onFilmDeleted: EventEmitter<void> = new EventEmitter();
 
   constructor(private filmService: FilmsService, private authService: AuthService, private router: Router) {
     this.router.onSameUrlNavigation = 'reload';
@@ -28,11 +27,6 @@ export class FilmCardComponent implements OnInit {
   }
 
   get filmImage() {
-    // if (this.film.img && !this.film.img.includes('/')) {
-    //   return `${environment.filmsImageUrl}/${this.film.id}`;
-    // } else {
-    //   return this.film.img;
-    // }
     return this.filmService.getFilmImage(this.film);
   }
 
@@ -51,7 +45,7 @@ export class FilmCardComponent implements OnInit {
       result => {
         if (result.isConfirmed) {
           this.filmService.deleteOneFilm(id)
-            .subscribe(result => this.filmDeleted.emit(result));
+            .subscribe(result => this.onFilmDeleted.emit(result));
           successToast('Entrada borrada de la base de datos');
         } else if (result.isDismissed || result.dismiss == Swal.DismissReason.backdrop) {
           failToast('Acción cancelada');

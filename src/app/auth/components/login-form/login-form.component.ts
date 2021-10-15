@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { User, UserForm } from '../../interfaces/user.interfaces';
+import { UserForm } from '../../interfaces/user.interfaces';
 
 @Component({
   selector: 'app-login-form',
@@ -15,7 +15,7 @@ export class LoginFormComponent implements OnInit {
     password: ['', [Validators.required, Validators.minLength(6)]]
   });
 
-  @Output() loginEmitter: EventEmitter<UserForm> = new EventEmitter();
+  @Output() onLogin: EventEmitter<UserForm> = new EventEmitter();
 
   constructor( private fb: FormBuilder ) { }
 
@@ -39,7 +39,7 @@ export class LoginFormComponent implements OnInit {
       this.loginFormGroup.controls[control].markAsTouched();
     });
     if (this.loginFormGroup.valid) {
-      this.loginEmitter.emit(this.loginFormGroup.value);
+      this.onLogin.emit(this.loginFormGroup.value);
     }
   }
 

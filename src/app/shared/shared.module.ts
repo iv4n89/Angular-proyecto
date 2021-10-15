@@ -11,6 +11,7 @@ import { AutoSizeDirective } from './directives/auto-size.directive';
 import { BigStarsComponent } from './helpers/rating/big-stars/big-stars.component';
 import { NgxStarsModule } from 'ngx-stars';
 import { CollapsedNavbarComponent } from './components/collapsed-navbar/collapsed-navbar.component';
+import { NavbarAutocloseDirective } from './directives/navbar-autoclose.directive';
 
 
 
@@ -23,7 +24,8 @@ import { CollapsedNavbarComponent } from './components/collapsed-navbar/collapse
     FormErrorMessageDirective,
     AutoSizeDirective,
     BigStarsComponent,
-    CollapsedNavbarComponent
+    CollapsedNavbarComponent,
+    NavbarAutocloseDirective
   ],
   imports: [
     CommonModule,

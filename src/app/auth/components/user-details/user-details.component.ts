@@ -1,10 +1,12 @@
 import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { User, UserForm } from '../../interfaces/user.interfaces';
+
 import Swal from 'sweetalert2';
-import { passwordMustntMatch } from 'src/app/shared/validators/custom-validators/custom-validators.component';
+
 import { environment } from 'src/environments/environment';
+import { passwordMustntMatch } from 'src/app/shared/validators/custom-validators/custom-validators.component';
 import { UserService } from '../../services/user.service';
+import { User, UserForm } from '../../interfaces/user.interfaces';
 
 @Component({
   selector: 'app-user-details',
@@ -19,9 +21,9 @@ export class UserDetailsComponent implements OnInit {
   innerWidth: number;
 
   @Input('userDetails') user!: User;
-  @Output() deleteEmitter: EventEmitter<boolean> = new EventEmitter();
-  @Output() editando: EventEmitter<boolean> = new EventEmitter();
-  @Output() editEmitter: EventEmitter<UserForm> = new EventEmitter();
+  @Output() onDelete: EventEmitter<boolean> = new EventEmitter();
+  @Output() onEditando: EventEmitter<boolean> = new EventEmitter();
+  @Output() onEditUser: EventEmitter<UserForm> = new EventEmitter();
 
   get name() {
     return this.user.name;
@@ -33,7 +35,7 @@ export class UserDetailsComponent implements OnInit {
     return this.user.role;
   }
   get avatar() {
-    return this.userService.getUserImage(this.user);
+    return this.userService.getUserImage(this.user) || environment.avatars[environment.avatars.length -1];
   }
 
   avatars: string[] = [...environment.avatars];
@@ -64,7 +66,7 @@ export class UserDetailsComponent implements OnInit {
   }
 
   editar() {
-    this.editando.emit(!this.isEditing);
+    this.onEditando.emit(!this.isEditing);
     this.isEditing = !this.isEditing;
 
     // this.isEditing = !this.isEditing;
@@ -93,16 +95,16 @@ export class UserDetailsComponent implements OnInit {
   editUser() {
     const controls = Object.keys(this.userForm.controls);
     controls.forEach(control => {
-      this.userForm.controls[control].markAsTouched();
+      this.userForm.controls[control].markAsTouched(); //probar quitar
     });
     if (this.userForm.valid && this.isEditing === true) {
       if (this.file) {
         this.userService.uploadUserImage(this.user.id!, this.file!)
           .subscribe(result => {
-            this.editEmitter.emit(this.userForm.value);
+            this.onEditUser.emit(this.userForm.value);
           });
       } else {
-        this.editEmitter.emit(this.userForm.value);
+        this.onEditUser.emit(this.userForm.value);
       }
     }
   }
@@ -119,7 +121,7 @@ export class UserDetailsComponent implements OnInit {
 
     }).then(result => {
       if (result.isConfirmed) {
-        this.deleteEmitter.emit(true);
+        this.onDelete.emit(true);
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire({
           title: 'Cancelado',

@@ -1,9 +1,9 @@
 import { Component, OnInit, Output, EventEmitter, HostListener } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { UserForm } from '../../interfaces/user.interfaces';
-import { passwordMatchValidator } from '../../../shared/validators/custom-validators/custom-validators.component';
 import { environment } from 'src/environments/environment';
+import { passwordMatchValidator } from '../../../shared/validators/custom-validators/custom-validators.component';
+import { UserForm } from '../../interfaces/user.interfaces';
 
 @Component({
   selector: 'app-register-form',
@@ -29,8 +29,8 @@ export class RegisterFormComponent implements OnInit {
     validator: passwordMatchValidator('password', 'password2')
   });
 
-  @Output() registerEmitter: EventEmitter<UserForm> = new EventEmitter();
-  @Output() fileEmitter: EventEmitter<File> = new EventEmitter();
+  @Output() onRegister: EventEmitter<UserForm> = new EventEmitter();
+  @Output() onFileUploaded: EventEmitter<File> = new EventEmitter();
 
   getAvatar(number: number) {
     return this.avatars[number];
@@ -65,9 +65,9 @@ export class RegisterFormComponent implements OnInit {
     });
     if (this.newUserForm.valid) {
       if (this.file) {
-        this.fileEmitter.emit(this.file);
+        this.onFileUploaded.emit(this.file);
       }
-      this.registerEmitter.emit(this.newUserForm.value);
+      this.onRegister.emit(this.newUserForm.value);
       this.newUserForm.reset();
     }
   }

@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 
-import { Film, Filter_query } from '../../interfaces/films.interfaces';
 import { BuscadorService } from '../../services/buscador.service';
+import { Film, Filter_query } from '../../interfaces/films.interfaces';
 import { FilmsService } from '../../services/films.service';
 
 @Component({
@@ -31,27 +31,9 @@ import { FilmsService } from '../../services/films.service';
 export class ListPageComponent implements OnInit {
 
   total: number = 0;
-  orden: string = 'DESC';
-  filtro: string = "";
-  options: Filter_query = {
-    limit: 8,
-    offset: 0,
-    contains: '',
-    genero: '',
-    year: 0,
-    duracion: 0,
-    puntuacion: 0,
-    order: 'createdAt-DESC'
-  }
+  options!: Filter_query;
   @Input() termino: string | number = '';
   films: Film[] = [];
-
-  genero_busqueda: FormGroup = this.fb.group({
-    genero: [this.options.genero],
-    year: [this.options.year],
-    puntuacion: [this.options.puntuacion],
-    duracion: [this.options.duracion]
-  });
 
   get hasNextPage() {
     return (this.total - this.options.offset!) > this.options.limit!;
@@ -64,29 +46,9 @@ export class ListPageComponent implements OnInit {
   constructor(private filmService: FilmsService, private buscadorService: BuscadorService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.repoblar();
-    this.buscadorService.terminoSubscriber.subscribe(
-      termino => {
-        if (!Number.isNaN(Number(termino))) {
-          this.options.year = Number(termino);
-          this.repoblar();
-        } else {
-          this.options.contains = termino;
-          this.repoblar();
-        }
-      }
-    );
-    this.genero_busqueda.valueChanges.subscribe(changes => {
-      this.options.duracion = changes.duracion;
-      this.options.genero = changes.genero;
-      this.options.puntuacion = changes.puntuacion;
-      this.options.year = changes.year;
-      if (changes.duracion === null) this.options.duracion = 0;
-      if (changes.genero === '---Seleccione---') this.options.genero = "";
-      if (changes.puntuacion === null) this.options.puntuacion = 0;
-      if (changes.year === null) this.options.year = 0;
+    if (this.options) {
       this.repoblar();
-    })
+    }
   }
 
   nextPage() {
@@ -99,31 +61,18 @@ export class ListPageComponent implements OnInit {
 
   prevPage() {
     if (this.options.offset! <= 0) {
-      this.options.offset! = 0;
+      this.options.offset = 0;
       return;
     }
     this.options.offset! -= this.options.limit!;
     this.repoblar();
   }
 
-  selectGenero(genero: string) {
-    this.genero_busqueda.get('genero')?.setValue(genero);
-  }
-
-  ordenar(por: string) {
-    if (this.filtro !== por && por !== 'titulo') {
-      this.filtro = por;
-      this.orden = 'DESC';
-    } else if (por === 'titulo' && this.filtro !== por) {
-      this.filtro = por;
-      this.orden = 'ASC';
-    } else {
-      if (this.orden === 'DESC') this.orden = 'ASC'
-      else this.orden = 'DESC';
-    }
-    this.options.order = `${por}-${this.orden}`;
+  optionsChanged(options: Filter_query) {
+    this.options = options;
     this.repoblar();
   }
+
 
   private repoblar() {
     this.filmService.getAllFilms(this.options)

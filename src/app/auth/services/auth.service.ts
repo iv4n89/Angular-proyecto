@@ -6,8 +6,8 @@ import { of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { AuthResponse } from '../interfaces/auth.interfaces';
+import { infoToast } from '../../shared/helpers/SwalToast.helper';
 import { User } from '../interfaces/user.interfaces';
-import { infoToast, warningToast } from '../../shared/helpers/SwalToast.helper';
 
 
 @Injectable({
@@ -93,7 +93,7 @@ export class AuthService {
     localStorage.clear();
     this._user = this.nullUser;
     this.loged = false;
-    infoToast('Usuario desconectado');
+    infoToast('Usuario desconectado'); // sacar
   }
 
 }

@@ -1,10 +1,10 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 
-import { Film, FilmResponse, Filter_query, IFilmService } from '../interfaces/films.interfaces';
+import { Observable } from 'rxjs';
+
 import { environment } from '../../../environments/environment';
+import { Film, FilmResponse, Filter_query, IFilmService } from '../interfaces/films.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +20,8 @@ export class FilmsService implements IFilmService {
   }
 
   getAllFilms(options: Filter_query): Observable<FilmResponse> {
-    const { limit = 8, offset = 0, contains = "", duracion = 0, genero = "", puntuacion = 0, year = 0, order = 'createdAt-DESC' } = options;
-    return this.http.get<FilmResponse>(`${this.url}/films?limit=${limit}&offset=${offset}&contains=${contains}&duracion=${duracion}&genero=${genero}&puntuacion=${puntuacion}&year=${year}&order=${order}`);
+    const params = new HttpParams().appendAll({ ...options });
+    return this.http.get<FilmResponse>(`${this.url}/films`, { params });
   }
   getOneFilm(id: number): Observable<Film> {
     return this.http.get<Film>(`${this.url}/films/${id}`);
@@ -38,7 +38,7 @@ export class FilmsService implements IFilmService {
   uploadFilmImage(id: number, file: File): Observable<void> {
     const formData = new FormData();
     formData.append('archivo', file, file.name);
-    return this.http.put<void>(`${this.url}/upload/films/${id}`, formData, { headers: this.headers });
+    return this.http.put<void>(`${environment.filmsImageUrl}/${id}`, formData, { headers: this.headers });
   }
   getFilmImage(film: Film) {
     if (film.img && !film.img.includes('/')) {

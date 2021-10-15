@@ -3,16 +3,15 @@
   <button class="btn btn-info customEdit" (click)="editarPelicula(film.id)"><i
       class='bx bxs-message-square-edit'></i></button>
 </div>
-<div class="card text-white cardCustom" routerLink="/comments/film/{{film.id}}">
-  <div>
-    <div class="card-img-overlay">
-      <h5 [ngClass]="{'customName': film.titulo.length < 40, 'customNameSmall': film.titulo.length > 40}">{{ film.titulo
-        | titlecase }}</h5>
-      <small class="customYear">{{ film.estreno }}</small>
-      <ngx-stars [size]="1" [initialStars]="film.puntuacion_media! /2" [maxStars]="5" [readonly]="true" color="#fff"
-        *ngIf="film.puntuacion_media! >= 0" class="customRating">
-      </ngx-stars>
-    </div>
+<div class="card text-white cardCustom" routerLink="/comments/film/{{film.id}}" aria-hidden="true">
+  <div class="card-img-overlay">
+    <h5 [ngClass]="{'customName': film.titulo.length < 40, 'customNameSmall': film.titulo.length > 40}"
+      class="placeholder-glow">{{ film.titulo
+      | titlecase }}</h5>
+    <small class="customYear placeholder-glow">{{ film.estreno }}</small>
+    <ngx-stars [size]="1" [initialStars]="film.puntuacion_media! /2" [maxStars]="5" [readonly]="true" color="#fff"
+      *ngIf="film.puntuacion_media! >= 0" class="customRating">
+    </ngx-stars>
   </div>
   <img [src]="filmImage" class="card-img" alt="film image">
 </div>

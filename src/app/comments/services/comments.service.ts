@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { AllCommentsResponse, Comment, CommentResponse, ICommentService } from '../interfaces/comments.interfaces';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map, catchError, tap, switchMap } from 'rxjs/operators';
+
+import { Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+
+import { AllCommentsResponse, Comment, CommentResponse, ICommentService } from '../interfaces/comments.interfaces';
+import { environment } from 'src/environments/environment';
 import { UserService } from 'src/app/auth/services/user.service';
 
 @Injectable({
@@ -10,7 +13,7 @@ import { UserService } from 'src/app/auth/services/user.service';
 })
 export class CommentsService implements ICommentService {
 
-  private url: string = 'http://localhost:3000/api';
+  private url: string = environment.baseUrl;
 
   constructor( private http: HttpClient, private userService: UserService ) { }
   getAllComments(filmId: number): Observable<AllCommentsResponse> {

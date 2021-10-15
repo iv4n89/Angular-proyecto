@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { BuscadorService } from 'src/app/films/services/buscador.service';
-import { debounceTime } from 'rxjs/operators';
 import { Router } from '@angular/router';
+
+import { debounceTime } from 'rxjs/operators';
+
+import { BuscadorService } from 'src/app/films/services/buscador.service';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { successToast } from '../../helpers/SwalToast.helper';
-import { environment } from 'src/environments/environment';
 import { UserService } from 'src/app/auth/services/user.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-side-nav',
@@ -27,7 +28,7 @@ export class SideNavComponent implements OnInit {
     return this.authService.user.role.split('_')[0];
   }
   get avatar() {
-    return this.userService.getUserImage(this.authService.user);
+    return this.userService.getUserImage(this.authService.user) || environment.avatars[environment.avatars.length - 1];
   }
 
   constructor(private fb: FormBuilder, private buscadorService: BuscadorService, private router: Router, private authService: AuthService, private userService: UserService) {

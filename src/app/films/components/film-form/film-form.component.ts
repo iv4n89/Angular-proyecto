@@ -1,7 +1,8 @@
-import { Component, OnInit, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { AuthService } from 'src/app/auth/services/auth.service';
 import { Router } from '@angular/router';
+
+import { AuthService } from 'src/app/auth/services/auth.service';
 import { Film } from '../../interfaces/films.interfaces';
 import { FilmsService } from '../../services/films.service';
 
@@ -25,8 +26,7 @@ export class FilmFormComponent implements OnInit {
     img: new FormControl('', Validators.required)
   });
 
-  @Output() imagen_mostrar: EventEmitter<string> = new EventEmitter();
-  @Output() filmFormValue: EventEmitter<FormGroup> = new EventEmitter();
+  @Output() onImagen_mostrar: EventEmitter<string> = new EventEmitter();
   imagen_subir: boolean = false;
   file: File | null = null;
 
@@ -38,7 +38,7 @@ export class FilmFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.newFilmForm.get('img')?.valueChanges.subscribe( img => {
-        this.imagen_mostrar.emit(img)
+        this.onImagen_mostrar.emit(img)
       }
     );
   }
@@ -53,10 +53,9 @@ export class FilmFormComponent implements OnInit {
       this.filmService.insertOneFilm(newFilm)
         .subscribe(result => {
           if (this.imagen_subir) {
-            this.filmService.uploadFilmImage(result.id, this.file!).subscribe();
+            this.filmService.uploadFilmImage(result.id, this.file!).subscribe(result => this.router.navigateByUrl('/films/list'));
           }
         });
-      this.router.navigateByUrl('/films/list');
     }
   }
 
@@ -84,7 +83,7 @@ export class FilmFormComponent implements OnInit {
 
     reader.onload = (_event) => {
       this.file = event.target.files[0];
-      this.imagen_mostrar.emit(reader.result as string);
+      this.onImagen_mostrar.emit(reader.result as string);
     }
   }
 

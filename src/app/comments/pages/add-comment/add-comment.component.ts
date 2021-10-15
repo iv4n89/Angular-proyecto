@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, UrlSegment } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+
+import Swal from 'sweetalert2';
+
+import { Comment } from '../../interfaces/comments.interfaces';
+import { CommentsService } from '../../services/comments.service';
 import { Film } from 'src/app/films/interfaces/films.interfaces';
 import { FilmsService } from 'src/app/films/services/films.service';
-import { CommentsService } from '../../services/comments.service';
-import { FormGroup } from '@angular/forms';
-import { Comment } from '../../interfaces/comments.interfaces';
-import { AuthService } from 'src/app/auth/services/auth.service';
-import { UserService } from 'src/app/auth/services/user.service';
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
-import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-add-comment',

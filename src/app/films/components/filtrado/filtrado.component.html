@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="d-flex float-left component-container justify-content-between" style="font-size: small;">
+    <div class="float-start ms-3 ">
+      <form [formGroup]="filtrado">
+        Filtrar:
+        <button type="button" class="btn" placement="bottom" [autoClose]="'outside'"
+          [ngbPopover]="genero">Género</button>
+        <ng-template #genero>
+          <app-selector-de-genero (onSelect)="selectGenero($event)"></app-selector-de-genero>
+        </ng-template>
+        <button type="button" class="btn" placement="bottom" [autoClose]="'outside'"
+          [ngbPopover]="year">Estreno</button>
+        <ng-template #year> Año <input type="number" style="width: 70px;" formControlName="year">
+        </ng-template>
+        <button type="button" class="btn" placement="bottom" [autoClose]="'outside'"
+          [ngbPopover]="puntuacion">Puntuación</button>
+        <ng-template #puntuacion>
+          <input type="number" min="0" max="10" style="width: 50px;" formControlName="puntuacion">
+        </ng-template>
+        <button type="button" class="btn" placement="bottom" [autoClose]="'outside'"
+          [ngbPopover]="duracion">Duración</button>
+        <ng-template #duracion>
+          <input type="number" min="0" style="width: 50px;" formControlName="duracion">
+          minutos
+        </ng-template>
+      </form>
+    </div>
+    <div class="float-end ms-4">
+      Ordenar:
+      <button type="button" class="btn" (click)="ordenar('titulo')">Título</button>
+      <button type="button" class="btn" (click)="ordenar('estreno')">Estreno</button>
+      <button type="button" class="btn" (click)="ordenar('puntuacion_media')">Puntuación</button>
+      <button type="button" class="btn" (click)="ordenar('duracion')">Duración</button>
+    </div>
+  </div>
+</div>

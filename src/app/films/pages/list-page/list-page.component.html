@@ -1,46 +1,9 @@
 <div class=" animate__animated animate__fadeIn">
   <div class="row">
-    <div class="d-flex float-left component-container justify-content-between" style="font-size: small;">
-      <div class="float-start ms-3 ">
-        Filtrar:
-        <button type="button" class="btn" placement="bottom" [autoClose]="'outside'"
-          [ngbPopover]="genero">Género</button>
-        <ng-template #genero>
-          <form [formGroup]="genero_busqueda">
-            <app-selector-de-genero (onSelect)="selectGenero($event)"></app-selector-de-genero>
-          </form>
-        </ng-template>
-        <button type="button" class="btn" placement="bottom" [autoClose]="'outside'"
-          [ngbPopover]="year">Estreno</button>
-        <ng-template #year>
-          <form [formGroup]="genero_busqueda">Año <input type="number" formControlName="year" style="width: 70px;">
-          </form>
-        </ng-template>
-        <button type="button" class="btn" placement="bottom" [autoClose]="'outside'"
-          [ngbPopover]="puntuacion">Puntuación</button>
-        <ng-template #puntuacion>
-          <form [formGroup]="genero_busqueda"><input type="number" formControlName="puntuacion" min="0" max="10"
-              style="width: 50px;"></form>
-        </ng-template>
-        <button type="button" class="btn" placement="bottom" [autoClose]="'outside'"
-          [ngbPopover]="duracion">Duración</button>
-        <ng-template #duracion>
-          <form [formGroup]="genero_busqueda"><input type="number" formControlName="duracion" min="0"
-              style="width: 50px;"> minutos </form>
-        </ng-template>
-      </div>
-      <div class="float-end ms-4">
-        Ordenar:
-        <button class="btn" (click)="ordenar('titulo')">Título</button>
-        <button class="btn" (click)="ordenar('estreno')">Estreno</button>
-        <button class="btn" (click)="ordenar('puntuacion_media')">Puntuación</button>
-        <button class="btn" (click)="ordenar('duracion')">Duración</button>
-      </div>
-    </div>
-    <!-- <small>Total: {{ total }}</small> -->
+    <app-filtrado (options)="optionsChanged($event)"></app-filtrado>
     <div style="min-height: 75vh;" class="container ">
       <div class="row row-cols-auto justify-content-evenly align-items-center">
-        <app-film-card *ngFor="let film of films" class="mb-3 mt-3" [film]="film" (filmDeleted)="filmDeleted()">
+        <app-film-card *ngFor="let film of films" class="mb-3 mt-3" [film]="film" (onFilmDeleted)="filmDeleted()">
         </app-film-card>
       </div>
     </div>
