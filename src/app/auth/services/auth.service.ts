@@ -93,7 +93,6 @@ export class AuthService {
     localStorage.clear();
     this._user = this.nullUser;
     this.loged = false;
-    infoToast('Usuario desconectado'); // sacar
   }
 
 }

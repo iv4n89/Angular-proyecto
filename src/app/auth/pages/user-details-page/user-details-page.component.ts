@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
+import { of } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
 import { AuthService } from '../../services/auth.service';
-import { UserService } from '../../services/user.service';
-import { Router } from '@angular/router';
+import { infoToast, successToast } from '../../../shared/helpers/SwalToast.helper';
 import { User, UserForm } from '../../interfaces/user.interfaces';
-import { successToast } from '../../../shared/helpers/SwalToast.helper';
-import { map, switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-user-details-page',
@@ -91,6 +91,7 @@ export class UserDetailsPageComponent implements OnInit {
 
   logout() {
     this.authService.logout();
+    infoToast('Usuario desconectado');
     this.router.navigateByUrl('/film/list');
   }
 

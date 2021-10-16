@@ -4,10 +4,11 @@ import { Router } from '@angular/router';
 
 import { debounceTime } from 'rxjs/operators';
 
-import { BuscadorService } from 'src/app/films/services/buscador.service';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { UserService } from 'src/app/auth/services/user.service';
+import { BuscadorService } from 'src/app/films/services/buscador.service';
 import { environment } from 'src/environments/environment';
+import { infoToast } from '../../helpers/SwalToast.helper';
+import { UserService } from 'src/app/auth/services/user.service';
 
 @Component({
   selector: 'app-side-nav',
@@ -78,6 +79,7 @@ export class SideNavComponent implements OnInit {
   logOut() {
     if (this.authService.loged) {
       this.authService.logout();
+      infoToast('Usuario desconectado');
       this.router.navigateByUrl('/films/list');
     }
   }

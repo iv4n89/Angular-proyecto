@@ -8,7 +8,7 @@
     <div>{{ username }}</div>
   </div>
 </div>
-<form [formGroup]="commentForm" (ngSubmit)="onEditEmit()">
+<form [formGroup]="commentForm" (ngSubmit)="edit()">
   <div class="m-3 row pb-3 justify-content-center">
     <div [ngClass]="{'col-2': innerWidth >= 570}" *ngIf="innerWidth >= 570"></div>
     <div [ngClass]="{'comment-section': true, 'col-10': innerWidth >= 570, 'w-100': innerWidth < 570}">
@@ -26,7 +26,7 @@
 
   </div>
   <div class="d-flex justify-content-between">
-    <button class="btn btn-danger ms-4 mb-3" (click)="onCancelEmit()" [disabled]="!comment">Cancelar</button>
+    <button class="btn btn-danger ms-4 mb-3" (click)="cancel()" [disabled]="!comment">Cancelar</button>
     <button class="btn btn-dark me-5 mb-3" type="submit">Enviar</button>
   </div>
 </form>

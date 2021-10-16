@@ -1,6 +1,8 @@
 import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+import Swal from 'sweetalert2';
+
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Comment } from '../../interfaces/comments.interfaces';
 import { UserService } from '../../../auth/services/user.service';
@@ -58,11 +60,15 @@ export class EditCommentComponent implements OnInit {
     }
   }
 
-  onEditEmit() {
-    this.onEdit.emit(this.commentForm.value);
+  edit() {
+    if(this.commentForm.valid) {
+      this.onEdit.emit(this.commentForm.value);
+    } else {
+      Swal.fire('Error', 'Debe escribir un comentario y puntuar para enviar', 'error');
+    }
   }
 
-  onCancelEmit() {
+  cancel() {
     this.onCancel.emit(false);
     window.scrollTo(0, document.body.scrollHeight);
   }
